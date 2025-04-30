@@ -1,0 +1,21 @@
+@startuml
+
+[*] --> BankAccount
+state BankAccount {
+  [*] --> active: balance >= 0
+  [*] --> frozen: balance < 0
+
+  active --> frozen: check_balance\n[is_negative_balance()]
+  frozen --> active: check_balance\n[is_positive_balance()]
+}
+
+[*] --> Budget
+state Budget {
+  [*] --> BALANCED: income >= expenses
+  [*] --> DEFICIT: expenses > income
+
+  BALANCED --> DEFICIT: update\n[is_deficit()]
+  DEFICIT --> BALANCED: update\n[is_balanced()]
+}
+
+@enduml
