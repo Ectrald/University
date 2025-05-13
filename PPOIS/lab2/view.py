@@ -79,12 +79,15 @@ class View:
         self.last_btn = ttk.Button(self.nav_frame, text='Последняя »', bootstyle=INFO, command=self.controller.last_page)
         self.last_btn.pack(side='left', padx=2)
 
-        self.per_page_var = tk.StringVar(value='10')
-        ttk.Label(self.nav_frame, text='Записей на странице:').pack(side='left', padx=5)
-        ttk.Entry(self.nav_frame, textvariable=self.per_page_var, width=5).pack(side='left')
-        ttk.Button(self.nav_frame, text='Применить', bootstyle=SECONDARY, command=self.controller.update_per_page).pack(side='left', padx=2)
+        self.pagination_controls_frame = ttk.Frame(self.main_frame)
+        self.pagination_controls_frame.pack(fill='x', pady=(0, 10))
 
-        self.total_label = ttk.Label(self.nav_frame, text='Всего записей: 0')
+        self.per_page_var = tk.StringVar(value='10')
+        ttk.Label(self.pagination_controls_frame, text='Записей на странице:').pack(side='left', padx=5)
+        ttk.Entry(self.pagination_controls_frame, textvariable=self.per_page_var, width=5).pack(side='left')
+        ttk.Button(self.pagination_controls_frame, text='Применить', bootstyle=SECONDARY, command=self.controller.update_per_page).pack(side='left', padx=2)
+
+        self.total_label = ttk.Label(self.pagination_controls_frame, text='Всего записей: 0')
         self.total_label.pack(side='right', padx=5)
 
         # Статусная строка
