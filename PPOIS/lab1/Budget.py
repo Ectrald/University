@@ -21,6 +21,7 @@ class Budget:
             'DEFICIT',
             conditions=['is_deficit']
         )
+
         self.machine.add_transition(
             'update',
             'DEFICIT',
@@ -40,15 +41,18 @@ class Budget:
         self._income += amount
         self.transactions.append(Transaction('income', amount, description))
         self.update()
+
     def add_expense(self, amount: float, description: str = "")-> None:
         if amount < 0:
             raise ValueError("Сумма расхода должна быть положительной.")
         self._expenses += amount
         self.transactions.append(Transaction('expense', amount, description))
         self.update()
+
     def analyze(self)-> None:
         net_profit = self._income - self._expenses
         print(f"Чистая прибыль: {net_profit:.2f}")
+
     def __str__(self) -> str:
         report = f"Бюджет:\n"
         report += f"Доход: {self._income:.2f}\n"

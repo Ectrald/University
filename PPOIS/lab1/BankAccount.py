@@ -1,22 +1,25 @@
 import uuid
 from transitions import Machine
 class BankAccount:
+
     states = ['active', 'frozen']
+
     def __init__(self, balance: float )-> None:
         self.__id = str(uuid.uuid4())
         self._balance = balance
-        # Инициализация FSM
         self.machine = Machine(
             model=self,
             states=BankAccount.states,
             initial='active' if balance >= 0 else 'frozen'
         )
+
         self.machine.add_transition(
             trigger='check_balance',
             source='active',
             dest='frozen',
             conditions=['is_negative_balance']
         )
+
         self.machine.add_transition(
             trigger='check_balance',
             source='frozen',
@@ -29,11 +32,13 @@ class BankAccount:
 
     def is_positive_balance(self) -> bool:
         return self._balance >= 0
+
     def add_money(self, money: float) -> None:
         if money <= 0:
             raise ValueError("Сумма пополнения должна быть положительной.")
         self._balance += money
         self.check_balance()
+
     def withdraw_money(self, money: float) -> None:
         if money <= 0:
             raise ValueError("Сумма снятия должна быть положительной.")
@@ -56,8 +61,10 @@ class BankAccount:
 
     def print_details(self) -> None:
         print(self)
+
     def get_id(self)-> str:
         return self.__id
+
     def get_balance(self)-> float:
         return self._balance
 
