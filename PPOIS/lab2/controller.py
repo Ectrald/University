@@ -10,8 +10,10 @@ class Controller:
         self.current_page = 1
         self.per_page = 10
         self.view_mode = 'table'
-
-        #self.model.add_test_data()
+        self.search_current_page = 1
+        self.search_per_page = 10
+        self.search_results = []
+        self.search_total_items = 0
         self.load_data()
 
     def load_data(self):
@@ -52,6 +54,49 @@ class Controller:
             messagebox.showerror("Ошибка", "Введите положительное число записей на странице")
             self.view.per_page_var.set(str(self.per_page))
 
+    def search_records(self, data):
+        search_params = {}
+        if data.get('surname'):
+            search_params['surname'] = data['surname']
+        if data.get('name'):
+            search_params['name'] = data['name']
+        if data.get('patronymic'):
+            search_params['patronymic'] = data['patronymic']
+        if data.get('account_number'):
+            try:
+                search_params['account_number'] = int(data['account_number'])
+            except ValueError:
+                messagebox.showerror("Ошибка", "Номер счёта должен быть числом")
+                return
+        if data.get('registration_address'):
+            search_params['registration_address'] = data['registration_address']
+        if data.get('mobile_phone'):
+            search_params['mobile_phone'] = data['mobile_phone']
+        if data.get('landline_phone'):
+            search_params['landline_phone'] = data['landline_phone']
+        if data.get('number_contains'):
+            search_params['number_contains'] = data['number_contains']
+
+        self.search_results = self.model.search_data(**search_params)
+        self.search_total_items = len(self.search_results)
+        self.search_current_page = 1
+
+    def get_search_page_data(self):
+        start = (self.search_current_page - 1) * self.search_per_page
+        end = min(start + self.search_per_page, len(self.search_results))
+        return self.search_results[start:end]
+
+    def get_search_total_pages(self):
+        return max(1, (self.search_total_items + self.search_per_page - 1) // self.search_per_page)
+
+    def set_search_page(self, page):
+        total_pages = self.get_search_total_pages()
+        self.search_current_page = max(1, min(page, total_pages))
+
+    def set_search_per_page(self, per_page):
+        self.search_per_page = max(1, per_page)
+        self.search_current_page = 1
+
     def switch_view(self, mode):
         self.view_mode = mode
         self.view.view_mode = mode
@@ -85,7 +130,7 @@ class Controller:
                 self.model.add_from_xml(filename)
                 self.current_page = 1
                 self.load_data()
-                self.view.update_status("Данные успешно загружены из XML")
+                self.view.update_status("Данные успешно добавлены из XML")
             except Exception as e:
                 messagebox.showerror("Ошибка", f"Не удалось загрузить файл: {str(e)}")
 
@@ -125,31 +170,6 @@ class Controller:
             dialog.destroy()
         except Exception as e:
             messagebox.showerror("Ошибка", f"Не удалось сохранить запись: {str(e)}")
-
-    def search_records(self, data):
-        search_params = {}
-        if data.get('surname'):
-            search_params['surname'] = data['surname']
-        if data.get('name'):
-            search_params['name'] = data['name']
-        if data.get('patronymic'):
-            search_params['patronymic'] = data['patronymic']
-        if data.get('account_number'):
-            try:
-                search_params['account_number'] = int(data['account_number'])
-            except ValueError:
-                messagebox.showerror("Ошибка", "Номер счёта должен быть числом")
-                return []
-        if data.get('registration_address'):
-            search_params['registration_address'] = data['registration_address']
-        if data.get('mobile_phone'):
-            search_params['mobile_phone'] = data['mobile_phone']
-        if data.get('landline_phone'):
-            search_params['landline_phone'] = data['landline_phone']
-        if data.get('number_contains'):
-            search_params['number_contains'] = data['number_contains']
-
-        return self.model.search_data(**search_params)
 
     def delete_records(self, data):
         delete_params = {}

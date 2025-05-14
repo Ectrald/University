@@ -23,7 +23,7 @@
 ![{0DBCD539-6535-47CE-8E5C-DBD3725E1C8D}](https://github.com/user-attachments/assets/28011081-6c5b-48c2-96dd-6c9d36b8efc8)
 
 Окно поиска записи:
-![{4FDB44A8-1EB5-4011-BC5F-98B64A8B7807}](https://github.com/user-attachments/assets/11926c8b-6675-4f00-9b09-1a2a61dacd66)
+![img.png](img.png)
 
 Меню:
 ![{3FF3916C-6946-4DEC-BCC1-E2FE08D4B6B5}](https://github.com/user-attachments/assets/3300f7fa-01c0-4b7a-b281-33ccb6e86986)
