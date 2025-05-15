@@ -193,7 +193,7 @@ class View:
             ('Фамилия', 'surname', True),
             ('Имя', 'name', True),
             ('Отчество', 'patronymic', True),
-            ('Номер счёта', 'account_number', False),
+            ('Номер счёта', 'account_number', True),
             ('Адрес', 'registration_address', True),
             ('Мобильный телефон', 'mobile_phone', False),
             ('Городской телефон', 'landline_phone', False)

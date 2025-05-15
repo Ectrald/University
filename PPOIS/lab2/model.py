@@ -13,7 +13,7 @@ class Model:
                 surname TEXT NOT NULL,
                 name TEXT NOT NULL,
                 patronymic TEXT NOT NULL,
-                account_number INTEGER,
+                account_number INTEGER NOT NULL,
                 registration_address TEXT NOT NULL,
                 mobile_phone TEXT,
                 landline_phone TEXT,
