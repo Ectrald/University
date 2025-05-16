@@ -4,6 +4,10 @@
 Вариант 2: Проверка является ли формула общезначимой (тавтологией)
 Автор: Германенко Владислав Вадимович
 Группа: 321701
+17.05.2025
+Использованные источники:
+Справочная система по дисциплине ЛОИС
+Логические основы интеллектуальных систем. Практикум
 """
 
 
@@ -134,6 +138,113 @@ def analyze_formula(expression):
         print(row)
 
 
+def user_test():
+    """Режим тестирования знаний пользователя"""
+    test_cases = [
+        {"formula": "(A->B)", "is_tautology": False},
+        {"formula": "((A->B)->(!B->!A))", "is_tautology": True},
+        {"formula": "(A|!A)", "is_tautology": True},
+        {"formula": "(A&!A)", "is_tautology": False},
+        {"formula": "((A->(B->A)))", "is_tautology": True},
+        {"formula": "A", "is_tautology": False},
+        {"formula": "((A->B)->A)", "is_tautology": False},
+        {"formula": "((A~B)->(A->B))", "is_tautology": True},
+        {"formula": "(((A|B)&(!A|C))->(B|C))", "is_tautology": True},
+        {"formula": "((A&(A->B))->B)", "is_tautology": True},
+        {"formula": "((A->B)&(B->C))->(A->C)", "is_tautology": True},
+        {"formula": "(!(A&B)~(!A|!B))", "is_tautology": True},
+        {"formula": "(!(A|B)~(!A&!B))", "is_tautology": True},
+        {"formula": "(A->(B->(A&B)))", "is_tautology": True},
+        {"formula": "((A&B)->A)", "is_tautology": True},
+    ]
+
+    correct = 0
+    print("\nРежим тестирования знаний. Вам будут показаны логические формулы.")
+    print("Определите, является ли каждая из них тавтологией (общезначимой формулой).")
+    print("Вводите '1' если ДА, '0' если НЕТ.\n")
+
+    for i, test in enumerate(test_cases, 1):
+        print(f"\nФормула #{i}: {test['formula']}")
+
+        # Проверяем валидность формулы перед использованием
+        is_valid, error = validate_formula(test['formula'])
+        if not is_valid:
+            print(f"Ошибка в тестовом примере: {error}")
+            continue
+
+        answer = input("Это тавтология? (1 - да, 0 - нет): ").strip()
+
+        while answer not in ('0', '1'):
+            print("Некорректный ввод. Используйте только '1' или '0'.")
+            answer = input("Это тавтология? (1 - да, 0 - нет): ").strip()
+
+        user_answer = (answer == '1')
+        if user_answer == test['is_tautology']:
+            print("Правильно!")
+            correct += 1
+        else:
+            print("Неправильно.", end=' ')
+            print(f"Правильный ответ: {'тавтология' if test['is_tautology'] else 'не тавтология'}")
+
+    print(f"\nВы ответили правильно на {correct} из {len(test_cases)} вопросов.")
+    print(f"Ваш результат: {correct / len(test_cases) * 100:.1f}%")
+
+
+def validate_formula(expression):
+    """Проверка корректности ввода формулы"""
+    # Проверка на пробелы
+    if ' ' in expression:
+        return False, "Формула не должна содержать пробелы"
+
+    # Проверка на заглавные буквы
+    variables = sorted(set(filter(str.isalpha, expression)))
+    if not all(v.isupper() for v in variables):
+        return False, "Используйте только заглавные буквы латинского алфавита"
+
+    # Проверка на допустимые символы
+    allowed_chars = set('ABCDEFGHIJKLMNOPQRSTUVWXYZ&|!()->~')
+    if not all(c in allowed_chars for c in expression):
+        return False, "Используйте только допустимые символы: A-Z, &, |, !, (, ), ->, ~"
+
+    # Если формула - одна переменная
+    if len(expression) == 1 and expression.isalpha():
+        return True, ""
+
+    # Проверка, что выражение в скобках
+    if not (expression.startswith('(') and expression.endswith(')')):
+        return False, "Выражение должно быть в скобках (кроме случая с одной переменной)"
+
+    # Проверка парности скобок
+    balance = 0
+    for c in expression:
+        if c == '(': balance += 1
+        if c == ')': balance -= 1
+        if balance < 0: return False, "Неправильная расстановка скобок"
+    if balance != 0: return False, "Неправильная расстановка скобок"
+
+    # Проверка структуры выражения
+    try:
+        # Удаляем внешние скобки для анализа
+        inner = expression[1:-1]
+        if not inner:
+            return False, "Пустое выражение в скобках"
+
+        # Проверяем, что есть оператор между переменными
+        if inner[0].isalpha() and inner[1].isalpha():
+            return False, "Две переменные должны быть разделены оператором"
+
+        # Проверяем корректность вложенных выражений
+        if inner.startswith('(') or inner.startswith('!('):
+            # Проверяем, что вложенное выражение содержит оператор
+            operators = {'&', '|', '->', '~'}
+            has_operator = any(op in inner for op in operators)
+            if not has_operator:
+                return False, "Выражение должно содержать логический оператор"
+    except:
+        return False, "Некорректная структура формулы"
+
+    return True, ""
+
 def main():
     """Основная функция программы"""
     print("Лабораторная работа №1")
@@ -141,19 +252,35 @@ def main():
 
     while True:
         print("\n" + "=" * 50)
-        expression = input("Введите логическое выражение (или 'exit' для выхода):\n"
-                           "Допустимые операторы: & (И), | (ИЛИ), ! (НЕ), -> (импликация), ~ (эквивалентность)\n"
-                           "Пример: (a -> b) & (!b -> !a)\n> ")
+        print("Выберите режим работы:")
+        print("1 - Анализ формулы")
+        print("2 - Тестирование знаний (определение тавтологий)")
+        print("3 - Выход")
+        choice = input("> ").strip()
 
-        if expression.lower() == 'exit':
-            break
+        if choice == '1':
+            print("\n" + "=" * 50)
+            expression = input("Введите логическое выражение (или 'exit' для выхода):\n"
+                               "Допустимые операторы: & (И), | (ИЛИ), ! (НЕ), -> (импликация), ~ (эквивалентность)\n"
+                               "> ")
 
-        try:
+            if expression.lower() == 'exit':
+                break
+
+            is_valid, error_message = validate_formula(expression)
+            if not is_valid:
+                print(f"\nОшибка: {error_message}")
+                continue
+
             analyze_formula(expression)
-        except Exception as e:
-            print(f"\nОшибка при анализе формулы: {e}")
-            print("Проверьте правильность ввода формулы")
-
+        elif choice == '2':
+            user_test()
+        elif choice == '3':
+            break
+        else:
+            print("Некорректный выбор. Пожалуйста, введите 1, 2 или 3.")
 
 if __name__ == "__main__":
     main()
+
+
