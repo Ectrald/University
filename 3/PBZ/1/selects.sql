@@ -9,9 +9,14 @@ SELECT DISTINCT p1.d AS "деталь 1", p2.d AS "деталь 2"
 FROM PSJ p1
 INNER JOIN PSJ p2 ON p1.p = p2.p AND p1.d < p2.d;
 -- 22 Получить номера проектов, использующих по крайней мере одну деталь, имеющуюся у  поставщика П1. 
+WITH details as (
+SELECT d
+FROM PSJ
+WHERE p = 'П1'
+)
 SELECT DISTINCT pr
 FROM PSJ
-WHERE p = 'П1';
+INNER JOIN details ON PSJ.d = details.d
 -- 11 Получить все пары названий городов, для которых поставщик из первого города обеспечивает проект во втором городе. 
 SELECT DISTINCT S.city, J.city
 FROM S 

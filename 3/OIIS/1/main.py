@@ -6,7 +6,7 @@ import time
 
 def my_fft(x):
     """
-    Рекурсивная реализация БПФ "с нуля".
+    Рекурсивная реализация БПФ.
     На вход принимает одномерный массив numpy, размер которого должен быть степенью двойки.
     """
     N = len(x)
@@ -36,10 +36,8 @@ def my_fft(x):
     return result
 
 
-# --- Шаг 2: Создание входного сигнала ---
-
 # Параметры сигнала
-N = 512              # Количество точек. ОБЯЗАТЕЛЬНО СТЕПЕНЬ ДВОЙКИ для нашей реализации!
+N = 512              # Количество точек.
 FREQUENCY = 15       # Частота синусоиды в Гц
 SAMPLING_RATE = 200  # Частота дискретизации в Гц
 
@@ -48,32 +46,20 @@ x_time = np.linspace(0.0, N / SAMPLING_RATE, N, endpoint=False)
 y_signal = np.sin(2 * np.pi * FREQUENCY * x_time)
 
 
-# --- Шаг 3: Выполнение и сравнение ---
-
-# 3.1. Используем нашу реализацию и замеряем время
 start_time_my_fft = time.time()
 my_yf = my_fft(y_signal)
 end_time_my_fft = time.time()
 my_fft_time = end_time_my_fft - start_time_my_fft
 
-# 3.2. Используем библиотечную реализацию NumPy и замеряем время
 start_time_np_fft = time.time()
 np_yf = np.fft.fft(y_signal)
 end_time_np_fft = time.time()
 np_fft_time = end_time_np_fft - start_time_np_fft
 
-
-# --- Шаг 4: Обработка результатов для построения графиков ---
-
-# Создаем шкалу частот для оси X
 xf = np.fft.fftfreq(N, 1 / SAMPLING_RATE)[:N//2]
 
-# Считаем амплитудные спектры
 my_amplitude_spectrum = 2.0/N * np.abs(my_yf[0:N//2])
 np_amplitude_spectrum = 2.0/N * np.abs(np_yf[0:N//2])
-
-
-# --- Шаг 5: Визуализация и вывод результатов ---
 
 print(f"Время выполнения реализации БПФ: {my_fft_time:.6f} секунд")
 print(f"Время выполнения NumPy БПФ:          {np_fft_time:.6f} секунд")
@@ -81,15 +67,11 @@ print("-" * 30)
 if np_fft_time > 0:
     print(f"Реализация NumPy быстрее примерно в {my_fft_time / np_fft_time:.2f} раз.")
 
-# Сравним, совпадают ли результаты (с небольшой погрешностью)
 is_close = np.allclose(my_amplitude_spectrum, np_amplitude_spectrum)
 print(f"Результаты совпадают: {'Да!' if is_close else 'Нет!'}")
 
-
-# Строим графики для визуального сравнения
 plt.figure(figsize=(12, 8))
 
-# График исходного сигнала
 plt.subplot(2, 1, 1)
 plt.plot(x_time, y_signal)
 plt.title('Исходный сигнал: sin(x)')
