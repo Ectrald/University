@@ -1,0 +1,37 @@
+@startuml
+left to right direction
+:Технолог: as t
+:Клиент: as k
+:Оператор: as o
+rectangle Предприятие {
+  usecase "Внос информации о клиентах" as u1
+  usecase "Изменить цены" as u2
+  usecase "Фиксация информации о разговоре" as u3
+  usecase "Отослать квитанцию об оплате" as u4
+  usecase "Оплатить разговор" as u5
+  usecase "Зафиксировать оплату" as u6
+  usecase "Позвонить" as u7
+  usecase "Внести номер телефона" as u8
+  usecase "Внести ФИО" as u9
+  usecase "Внести адресс" as u10
+  usecase "Внести дату регистрации" as u11
+  usecase "Зафиксировать дату разговора" as u12
+  usecase "Зафиксировать город" as u13
+  usecase "Зафиксировать номер абонента" as u13
+  usecase "Зафиксировать длительность разговора" as u14
+}
+t --> u1
+t --> u2
+o --> u3
+o --> u4
+k --> u5
+o --> u6
+k --> u7
+u1 --> u8 : "include"
+u1 --> u9 : "include"
+u1 --> u10 : "include"
+u1 --> u11 : "include"
+u3 --> u12 : "include"
+u3 --> u13 : "include"
+u3 --> u14 : "include"
+@enduml

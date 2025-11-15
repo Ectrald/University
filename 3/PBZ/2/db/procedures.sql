@@ -1,6 +1,3 @@
--- ============================================================
--- Безопасные функции (PostgreSQL, схема public)
--- ============================================================
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
@@ -31,8 +28,8 @@ END;
 $$;
 
 -- Обновление клиента
-CREATE OR REPLACE FUNCTION update_client(p_client_id INT, p_full_name VARCHAR(255), p_phone_number VARCHAR(20), p_address TEXT, p_registration_date DATE)
-RETURNS VOID LANGUAGE plpgsql AS $$
+CREATE OR REPLACE PROCEDURE update_client(p_client_id INT, p_full_name VARCHAR(255), p_phone_number VARCHAR(20), p_address TEXT, p_registration_date DATE)
+LANGUAGE plpgsql AS $$
 BEGIN
     UPDATE client SET full_name = p_full_name, phone_number = p_phone_number, address = p_address, registration_date = p_registration_date
     WHERE client_id = p_client_id;
@@ -86,7 +83,7 @@ BEGIN
     ELSE
         SELECT standard_rate INTO v_rate FROM tariff WHERE tariff_id = p_tariff_id;
     END IF;
-    IF v_rate IS NULL THEN RAISE EXCEPTION 'Тариф с id % не найден', p_tariff_id; END IF;
+    IF v_rate IS NULL THEN RAISE EXCEPTION 'Tarif id % не найден', p_tariff_id; END IF;
     INSERT INTO call (client_id, tariff_id, destination_city, duration_minutes, call_cost, call_date, receipt_issue_date)
     VALUES (p_client_id, p_tariff_id, p_destination_city, p_duration, v_rate * p_duration, CURRENT_TIMESTAMP, CURRENT_DATE);
 END;
