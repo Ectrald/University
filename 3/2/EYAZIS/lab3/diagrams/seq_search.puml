@@ -1,0 +1,21 @@
+@startuml
+skinparam monochrome true
+
+actor User
+participant "Streamlit UI" as UI
+participant "FastAPI" as API
+participant "CorpusController" as Ctrl
+participant "CorpusManager" as Manager
+database "Database" as DB
+
+User -> UI : Вводит слово или лемму для поиска
+UI -> API : GET /api/search?query=word
+API -> Ctrl : search_words(query)
+Ctrl -> Manager : search(query)
+Manager -> DB : SQL запрос слова/леммы
+return Список объектов Word
+Ctrl -> Ctrl : Форматирование результата
+return Список словарей
+return Массив JSON
+UI -> User : Вывод таблицы DataFrame
+@enduml

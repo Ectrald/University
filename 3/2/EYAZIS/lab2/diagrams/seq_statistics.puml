@@ -1,0 +1,30 @@
+@startuml
+skinparam monochrome true
+
+actor User
+participant "Streamlit UI" as UI
+participant "FastAPI" as API
+participant "CorpusController" as Ctrl
+participant "FrequencyAnalyzer" as Freq
+database "Database" as DB
+
+User -> UI : Переходит на вкладку "Statistics"
+UI -> API : GET /api/statistics
+API -> Ctrl : get_statistics()
+Ctrl -> DB : Агрегатные запросы COUNT()
+return Словарь со статистикой
+return JSON Stats
+
+UI -> API : GET /api/frequency?top_n=30
+API -> Ctrl : get_frequency_data(30)
+Ctrl -> Freq : get_top_words(30)
+Freq -> DB : ЗАПРОС наиболее частых слов
+return Список частот
+Ctrl -> Freq : get_top_lemmas(30)
+Freq -> DB : ЗАПРОС наиболее частых лемм
+return Список частот
+return Словарь с частотными данными
+return JSON Data
+
+UI -> User : Отрисовка метрик и графиков
+@enduml

@@ -1,0 +1,94 @@
+//Поиск тарифов для конкретного города
+MATCH (t:Tariff)-[:APPLIES_TO]->(city:City {name: 'Москва'})
+RETURN 
+    city.name AS Город, 
+    t.standard_rate AS Обычная_цена, 
+    t.preferential_rate AS Льготная_цена, 
+    t.effective_date AS Дата_вступления
+ORDER BY t.effective_date DESC
+
+//История звонков конкретного клиента
+MATCH (c:Client {login: 'client1'})-[:MADE_CALL]->(call:Call)-[:TO_CITY]->(city:City)
+WHERE call.call_date >= datetime('2023-01-01T00:00:00')
+RETURN 
+    call.call_date AS Дата_время, 
+    city.name AS Куда_звонили, 
+    call.duration_minutes AS Длительность_мин, 
+    call.call_cost AS Стоимость
+ORDER BY call.call_date DESC
+
+//Поиск неоплаченных счетов
+MATCH (c:Client)<-[:BILLED_TO]-(inv:Invoice)
+WHERE inv.is_paid = false
+RETURN 
+    c.full_name AS ФИО_Клиента, 
+    c.phone_number AS Телефон, 
+    inv.issue_date AS Дата_выставления, 
+    inv.total_amount AS Сумма_долга
+
+//Топ-3 самых популярных городов
+MATCH (call:Call)-[:TO_CITY]->(city:City)
+RETURN 
+    city.name AS Город, 
+    COUNT(call) AS Количество_звонков
+ORDER BY Количество_звонков DESC
+LIMIT 3
+
+//Выручка в разрезе городов
+MATCH (call:Call)-[:TO_CITY]->(city:City)
+RETURN 
+    city.name AS Город, 
+    SUM(call.call_cost) AS Общая_выручка
+ORDER BY Общая_выручка DESC
+
+//Эффективность работы операторов
+MATCH (op:Operator)-[:REGISTERED_CALL]->(call:Call)
+RETURN 
+    op.full_name AS Оператор, 
+    COUNT(call) AS Оформлено_звонков
+ORDER BY Оформлено_звонков DESC
+
+//Детализация конкретного счета (Квитанция)
+MATCH (inv:Invoice {is_paid: false})<-[:INCLUDED_IN]-(call:Call)
+// Дополнительно подтянем город для наглядности
+MATCH (call)-[:TO_CITY]->(city:City)
+RETURN 
+    inv.issue_date AS Дата_счета,
+    call.call_date AS Дата_звонка,
+    city.name AS Город,
+    call.duration_minutes AS Минуты,
+    call.call_cost AS Цена
+
+//Сумма звонков клиента за период
+MATCH (c:Client {full_name: 'Сидоров Сидор Сидорович'})
+      -[:MADE_CALL]->(call:Call)
+WHERE call.call_date >= datetime('2023-10-01T00:00:00')
+  AND call.call_date < datetime('2023-11-01T00:00:00')
+RETURN
+    c.full_name AS ClientName,
+    sum(call.call_cost) AS TotalCostForOctober
+
+//Клиенты, которые звонили в определенный город, и использованный тариф
+MATCH (c:Client)-[:MADE_CALL]->(call:Call)
+      -[:USED_TARIFF]->(t:Tariff)
+      -[:APPLIES_TO]->(msk:City {name: 'Москва'})
+RETURN
+    c.full_name AS ClientName,
+    c.phone_number AS PhoneNumber,
+    call.call_date AS CallDate,
+    call.call_cost AS CallCost,
+    t.standard_rate AS StandardRate,
+    t.preferential_rate AS PreferentialRate
+ORDER BY call.call_date DESC
+
+//Отчет о тарифах, которыми управлял конкретный технолог
+MATCH (tech:Technologist {full_name: 'Иванов Иван Иванович'})
+      -[:MANAGES_TARIFF]->(t:Tariff)
+      -[:APPLIES_TO]->(city:City)
+RETURN
+    t.effective_date AS EffectiveDate,
+    city.name AS CityName,
+    t.standard_rate AS StandardRate,
+    t.preferential_rate AS PreferentialRate,
+    tech.full_name AS ManagedBy
+ORDER BY t.effective_date, city.name

@@ -1,0 +1,3 @@
+add_subdirectory(exampleModule)
+add_subdirectory(reusable-components)
+add_subdirectory(weatherForecastStructureModule)

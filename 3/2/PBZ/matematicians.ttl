@@ -1,0 +1,120 @@
+@prefix : <http://example.org/math#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/math> a owl:Ontology .
+
+### --- КЛАССЫ (10 классов) --- ###
+:Mathematician a owl:Class .
+:HistoricalEra a owl:Class .
+:ScientificWork a owl:Class .
+:Theory a owl:Class .
+:Theorem a owl:Class .
+:MathematicalMethod a owl:Class .
+:MathematicalConcept a owl:Class .
+:BranchOfMathematics a owl:Class .
+:NumberSystem a owl:Class .
+:ScientificSchool a owl:Class .
+
+### --- СВОЙСТВА ДАННЫХ (Data Properties - СЛОТЫ) --- ###
+:hasName a owl:DatatypeProperty ; rdfs:domain :Mathematician ; rdfs:range xsd:string .
+:eraName a owl:DatatypeProperty ; rdfs:domain :HistoricalEra ; rdfs:range xsd:string .
+:workTitle a owl:DatatypeProperty ; rdfs:domain :ScientificWork ; rdfs:range xsd:string .
+:theoryName a owl:DatatypeProperty ; rdfs:domain :Theory ; rdfs:range xsd:string .
+:theoremName a owl:DatatypeProperty ; rdfs:domain :Theorem ; rdfs:range xsd:string .
+:methodName a owl:DatatypeProperty ; rdfs:domain :MathematicalMethod ; rdfs:range xsd:string .
+:conceptName a owl:DatatypeProperty ; rdfs:domain :MathematicalConcept ; rdfs:range xsd:string .
+:branchName a owl:DatatypeProperty ; rdfs:domain :BranchOfMathematics ; rdfs:range xsd:string .
+:systemName a owl:DatatypeProperty ; rdfs:domain :NumberSystem ; rdfs:range xsd:string .
+:schoolName a owl:DatatypeProperty ; rdfs:domain :ScientificSchool ; rdfs:range xsd:string .
+
+### --- ОБЪЕКТНЫЕ СВОЙСТВА (Object Properties - СЛОТЫ) --- ###
+:belongsToEra a owl:ObjectProperty ; rdfs:domain :Mathematician ; rdfs:range :HistoricalEra .
+:hasMathematician a owl:ObjectProperty ; owl:inverseOf :belongsToEra .
+:writtenBy a owl:ObjectProperty ; rdfs:domain :ScientificWork ; rdfs:range :Mathematician .
+:developedBy a owl:ObjectProperty ; rdfs:domain :Theory ; rdfs:range :Mathematician .
+:formulatedBy a owl:ObjectProperty ; rdfs:domain :Theorem ; rdfs:range :Mathematician .
+:inventedBy a owl:ObjectProperty ; rdfs:domain :MathematicalMethod ; rdfs:range :Mathematician .
+:introducedBy a owl:ObjectProperty ; rdfs:domain :MathematicalConcept ; rdfs:range :Mathematician .
+:foundedBy a owl:ObjectProperty ; rdfs:domain :BranchOfMathematics ; rdfs:range :Mathematician .
+:popularizedBy a owl:ObjectProperty ; rdfs:domain :NumberSystem ; rdfs:range :Mathematician .
+:establishedBy a owl:ObjectProperty ; rdfs:domain :ScientificSchool ; rdfs:range :Mathematician .
+
+
+### --- ЭКЗЕМПЛЯРЫ (Instances - минимум по 2 на класс) --- ###
+
+# HistoricalEra
+:Antiquity a owl:NamedIndividual, :HistoricalEra ; :eraName "Античность"^^xsd:string .
+:ModernEra a owl:NamedIndividual, :HistoricalEra ; :eraName "Новое время"^^xsd:string .
+
+# Mathematician
+:Pythagoras a owl:NamedIndividual, :Mathematician ; 
+    :hasName "Пифагор"^^xsd:string ; :belongsToEra :Antiquity .
+:Euclid a owl:NamedIndividual, :Mathematician ; 
+    :hasName "Евклид"^^xsd:string ; :belongsToEra :Antiquity .
+:Descartes a owl:NamedIndividual, :Mathematician ; 
+    :hasName "Рене Декарт"^^xsd:string ; :belongsToEra :ModernEra .
+:Fermat a owl:NamedIndividual, :Mathematician ; 
+    :hasName "Пьер Ферма"^^xsd:string ; :belongsToEra :ModernEra .
+:Leibniz a owl:NamedIndividual, :Mathematician ; 
+    :hasName "Готфрид Лейбниц"^^xsd:string ; :belongsToEra :ModernEra .
+:Cantor a owl:NamedIndividual, :Mathematician ; 
+    :hasName "Георг Кантор"^^xsd:string .
+:Turing a owl:NamedIndividual, :Mathematician ; 
+    :hasName "Алан Тьюринг"^^xsd:string .
+:AlKhwarizmi a owl:NamedIndividual, :Mathematician ; 
+    :hasName "аль-Хорезми"^^xsd:string .
+:Diophantus a owl:NamedIndividual, :Mathematician ; 
+    :hasName "Диофант"^^xsd:string ; :belongsToEra :Antiquity .
+:Bourbaki a owl:NamedIndividual, :Mathematician ; 
+    :hasName "Николя Бурбаки"^^xsd:string .
+
+# ScientificWork
+:Elements a owl:NamedIndividual, :ScientificWork ; 
+    :workTitle "Начала"^^xsd:string ; :writtenBy :Euclid .
+:Arithmetica a owl:NamedIndividual, :ScientificWork ; 
+    :workTitle "Арифметика"^^xsd:string ; :writtenBy :Diophantus .
+
+# Theory
+:SetTheory a owl:NamedIndividual, :Theory ; 
+    :theoryName "Теория множеств"^^xsd:string ; :developedBy :Cantor .
+:NumberTheory a owl:NamedIndividual, :Theory ; 
+    :theoryName "Теория чисел"^^xsd:string ; :developedBy :Pythagoras .
+
+# Theorem
+:FermatTheorem a owl:NamedIndividual, :Theorem ; 
+    :theoremName "Великая теорема Ферма"^^xsd:string ; :formulatedBy :Fermat .
+:PythagorasTheorem a owl:NamedIndividual, :Theorem ; 
+    :theoremName "Теорема Пифагора"^^xsd:string ; :formulatedBy :Pythagoras .
+
+# MathematicalMethod
+:CoordinateMethod a owl:NamedIndividual, :MathematicalMethod ; 
+    :methodName "Метод координат"^^xsd:string ; :inventedBy :Descartes .
+:DiagonalMethod a owl:NamedIndividual, :MathematicalMethod ; 
+    :methodName "Диагональный метод"^^xsd:string ; :inventedBy :Cantor .
+
+# MathematicalConcept
+:TuringMachine a owl:NamedIndividual, :MathematicalConcept ; 
+    :conceptName "Машина Тьюринга"^^xsd:string ; :introducedBy :Turing .
+:Algorithm a owl:NamedIndividual, :MathematicalConcept ; 
+    :conceptName "Алгоритм"^^xsd:string ; :introducedBy :AlKhwarizmi .
+
+# BranchOfMathematics
+:AnalyticalGeometry a owl:NamedIndividual, :BranchOfMathematics ; 
+    :branchName "Аналитическая геометрия"^^xsd:string ; :foundedBy :Descartes .
+:MathematicalAnalysis a owl:NamedIndividual, :BranchOfMathematics ; 
+    :branchName "Математический анализ"^^xsd:string ; :foundedBy :Leibniz .
+
+# NumberSystem
+:BinarySystem a owl:NamedIndividual, :NumberSystem ; 
+    :systemName "Двоичная система счисления"^^xsd:string ; :popularizedBy :Leibniz .
+:DecimalSystem a owl:NamedIndividual, :NumberSystem ; 
+    :systemName "Десятичная система"^^xsd:string ; :popularizedBy :AlKhwarizmi .
+
+# ScientificSchool
+:PythagoreanSchool a owl:NamedIndividual, :ScientificSchool ; 
+    :schoolName "Пифагорейская школа"^^xsd:string ; :establishedBy :Pythagoras .
+:BourbakiGroup a owl:NamedIndividual, :ScientificSchool ; 
+    :schoolName "Группа Бурбаки"^^xsd:string ; :establishedBy :Bourbaki .

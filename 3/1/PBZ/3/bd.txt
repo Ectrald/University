@@ -1,0 +1,104 @@
+// --- 1. Ограничения (Constraints) ---
+CREATE CONSTRAINT user_login_unique IF NOT EXISTS FOR (u:User) REQUIRE u.login IS UNIQUE;
+CREATE CONSTRAINT provider_id_unique IF NOT EXISTS FOR (p:ServiceProvider) REQUIRE p.provider_id IS UNIQUE;
+CREATE CONSTRAINT client_phone_unique IF NOT EXISTS FOR (c:Client) REQUIRE c.phone_number IS UNIQUE;
+CREATE CONSTRAINT city_name_unique IF NOT EXISTS FOR (c:City) REQUIRE c.name IS UNIQUE;
+
+// --- 2. Индексы ---
+CREATE INDEX invoice_status_idx IF NOT EXISTS FOR (i:Invoice) ON (i.is_paid);
+CREATE INDEX call_date_idx IF NOT EXISTS FOR (c:Call) ON (c.call_date);
+CREATE INDEX tariff_effective_idx IF NOT EXISTS FOR (t:Tariff) ON (t.effective_date);
+
+// --- 3. Справочные данные (Провайдер и Города) ---
+MERGE (mts:ServiceProvider {provider_id: 1})
+ON CREATE SET mts.name = 'МТС-Междугородняя Станция', mts.address = 'ул. Связистов, д. 10';
+
+MERGE (msk:City {name: 'Москва'});
+MERGE (spb:City {name: 'Санкт-Петербург'});
+MERGE (kzn:City {name: 'Казань'});
+MERGE (ekb:City {name: 'Екатеринбург'});
+
+// --- 4. Пользователи ---
+MERGE (tech:User:Technologist {login: 'tech1'})
+ON CREATE SET 
+    tech.password_hash = '$2a$06$Lb...',
+    tech.full_name = 'Иванов Иван Иванович',
+    tech.role = 'technologist';
+
+MERGE (oper:User:Operator {login: 'oper1'})
+ON CREATE SET 
+    oper.password_hash = '$2a$06$Kc...',
+    oper.full_name = 'Петрова Анна Сергеевна',
+    oper.role = 'operator';
+
+MERGE (client:User:Client {login: 'client1'})
+ON CREATE SET 
+    client.password_hash = '$2a$06$Yz...',
+    client.role = 'client',
+    client.full_name = 'Сидоров Сидор Сидорович',
+    client.phone_number = '89001112233',
+    client.address = 'г. Нижний Новгород, ул. Ленина 1',
+    client.registration_date = date('2023-05-15');
+
+// --- 5. Тарифы ---
+MATCH (tech:User:Technologist {login: 'tech1'})
+MATCH (mts:ServiceProvider {provider_id: 1})
+MATCH (msk:City {name: 'Москва'})
+MATCH (spb:City {name: 'Санкт-Петербург'})
+
+// Используем MERGE, чтобы не дублировать тарифы при повторном запуске
+MERGE (t_msk:Tariff {effective_date: date('2023-01-01'), city_target: 'Москва'})
+ON CREATE SET 
+    t_msk.standard_rate = 5.00,
+    t_msk.preferential_rate = 2.50
+
+MERGE (t_spb:Tariff {effective_date: date('2023-01-01'), city_target: 'Санкт-Петербург'})
+ON CREATE SET 
+    t_spb.standard_rate = 4.00,
+    t_spb.preferential_rate = 2.00
+
+// Связи тарифов
+MERGE (mts)-[:OFFERS_TARIFF]->(t_msk)
+MERGE (mts)-[:OFFERS_TARIFF]->(t_spb)
+MERGE (t_msk)-[:APPLIES_TO]->(msk)
+MERGE (t_spb)-[:APPLIES_TO]->(spb)
+MERGE (tech)-[:MANAGES_TARIFF]->(t_msk)
+MERGE (tech)-[:MANAGES_TARIFF]->(t_spb);
+
+// --- 6. Регистрация звонка (Исправленная логика) ---
+MATCH (c:Client {login: 'client1'})
+MATCH (op:Operator {login: 'oper1'})
+MATCH (msk:City {name: 'Москва'})
+
+// Находим строго один актуальный тариф
+MATCH (t_msk:Tariff)-[:APPLIES_TO]->(msk)
+WHERE t_msk.effective_date <= date('2023-10-27')
+WITH c, op, msk, t_msk
+ORDER BY t_msk.effective_date DESC LIMIT 1 
+
+CREATE (call1:Call {
+    id: randomUUID(),
+    call_date: datetime('2023-10-27T10:00:00'),
+    duration_minutes: 10,
+    destination_city: 'Москва',
+    call_cost: 10 * t_msk.standard_rate
+})
+
+MERGE (c)-[:MADE_CALL]->(call1)
+MERGE (call1)-[:TO_CITY]->(msk)
+MERGE (call1)-[:USED_TARIFF]->(t_msk)
+MERGE (op)-[:REGISTERED_CALL]->(call1);
+
+// --- 7. Генерация счета (Новый блок, нужен для ваших запросов) ---
+MATCH (c:Client {login: 'client1'})
+MATCH (call1:Call {destination_city: 'Москва'}) 
+WHERE call1.call_date = datetime('2023-10-27T10:00:00')
+
+// Создаем неоплаченный счет
+MERGE (inv:Invoice {issue_date: date('2023-11-01'), invoice_number: 'INV-001'})
+ON CREATE SET 
+    inv.total_amount = call1.call_cost,
+    inv.is_paid = false
+
+MERGE (inv)-[:BILLED_TO]->(c)
+MERGE (call1)-[:INCLUDED_IN]->(inv);

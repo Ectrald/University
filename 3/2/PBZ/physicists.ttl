@@ -1,0 +1,45 @@
+@prefix : <http://example.org/physics#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/physics> a owl:Ontology .
+
+### --- КЛАССЫ --- ###
+:Physicist a owl:Class .
+:Discovery a owl:Class .
+:PhysicsEra a owl:Class .
+
+### --- СВОЙСТВА ДАННЫХ --- ###
+:physicistName a owl:DatatypeProperty ; rdfs:domain :Physicist ; rdfs:range xsd:string .
+:discoveryName a owl:DatatypeProperty ; rdfs:domain :Discovery ; rdfs:range xsd:string .
+:eraName a owl:DatatypeProperty ; rdfs:domain :PhysicsEra ; rdfs:range xsd:string .
+
+### --- ОБЪЕКТНЫЕ СВОЙСТВА --- ###
+:livedInEra a owl:ObjectProperty ; rdfs:domain :Physicist ; rdfs:range :PhysicsEra .
+:discoveredBy a owl:ObjectProperty ; rdfs:domain :Discovery ; rdfs:range :Physicist .
+
+### --- ЭКЗЕМПЛЯРЫ --- ###
+# Эпохи (названия совпадают с математической онтологией для пересечений)
+:AntiquityPhys a owl:NamedIndividual, :PhysicsEra ; :eraName "Античность"^^xsd:string .
+:ModernEraPhys a owl:NamedIndividual, :PhysicsEra ; :eraName "Новое время"^^xsd:string .
+:ContemporaryEra a owl:NamedIndividual, :PhysicsEra ; :eraName "Новейшее время"^^xsd:string .
+
+# Физики
+:Newton a owl:NamedIndividual, :Physicist ; 
+    :physicistName "Исаак Ньютон"^^xsd:string ; :livedInEra :ModernEraPhys .
+:Einstein a owl:NamedIndividual, :Physicist ; 
+    :physicistName "Альберт Эйнштейн"^^xsd:string ; :livedInEra :ContemporaryEra .
+:Archimedes a owl:NamedIndividual, :Physicist ; 
+    :physicistName "Архимед"^^xsd:string ; :livedInEra :AntiquityPhys .
+:Galileo a owl:NamedIndividual, :Physicist ; 
+    :physicistName "Галилео Галилей"^^xsd:string ; :livedInEra :ModernEraPhys .
+
+# Открытия
+:Gravity a owl:NamedIndividual, :Discovery ; 
+    :discoveryName "Закон всемирного тяготения"^^xsd:string ; :discoveredBy :Newton .
+:Relativity a owl:NamedIndividual, :Discovery ; 
+    :discoveryName "Теория относительности"^^xsd:string ; :discoveredBy :Einstein .
+:Hydrostatics a owl:NamedIndividual, :Discovery ; 
+    :discoveryName "Закон Архимеда"^^xsd:string ; :discoveredBy :Archimedes .

@@ -1,0 +1,5 @@
+PyQt5
+nltk
+psycopg2-binary
+pymupdf
+python-dotenv
