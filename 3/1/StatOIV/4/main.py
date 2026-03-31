@@ -20,6 +20,7 @@ from sklearn.metrics import (
 sns.set(style="whitegrid")
 plt.rcParams['figure.figsize'] = (12, 6)
 
+# --- Предобработка данных ---
 df = pd.read_csv("winequality-red.csv")
 df = df.drop_duplicates().dropna()
 y_true = df['quality']
@@ -38,13 +39,11 @@ X = X_raw[mask].copy()
 y_true = y_true[mask].copy()
 print(f"Размер данных после удаления выбросов: {X.shape}")
 
-# Масштабирование (Критически важно для кластеризации)
+# Масштабирование
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
-
-
-# 2. Определение оптимальных параметров
+# --- Определение оптимальных параметров ---
 def plot_kmeans_optimization(data):
     """Строит графики Метода локтя и Силуэтного скора."""
     inertia = []
@@ -79,7 +78,7 @@ def plot_dendrogram_viz(data):
     """Строит дендрограмму для Agglomerative Clustering."""
     plt.figure(figsize=(12, 5))
     plt.title("Дендрограмма (Hierarchical Clustering Dendrogram)")
-    # Используем метод ward для минимизации дисперсии
+
     dend = dendrogram(linkage(data, method='ward'))
     plt.xlabel("Индексы образцов")
     plt.ylabel("Расстояние")
@@ -92,7 +91,6 @@ def plot_k_distance(data, k=5):
     nbrs = neigh.fit(data)
     distances, indices = nbrs.kneighbors(data)
 
-    # Сортируем расстояния до k-го соседа
     distances = np.sort(distances[:, k - 1], axis=0)
 
     plt.figure(figsize=(10, 5))
@@ -110,27 +108,24 @@ plot_dendrogram_viz(X_scaled)
 
 plot_k_distance(X_scaled, k=14)
 
-# 3. Обучение моделей с выбранными параметрами
-# A. KMeans
+# --- Обучение моделей с выбранными параметрами ---
+# -- KMeans --
 kmeans_k = 3
 kmeans = KMeans(n_clusters=kmeans_k, random_state=42, n_init=10)
 kmeans_labels = kmeans.fit_predict(X_scaled)
 
-# B. Agglomerative
+# -- Agglomerative --
 agg_k = 3
 agg = AgglomerativeClustering(n_clusters=agg_k, linkage='ward')
 agg_labels = agg.fit_predict(X_scaled)
 
-# C. DBSCAN
-# eps выбирается по "изгибу" на графике k-distance.
-# Для StandardScaler данных eps обычно в диапазоне 2.0 - 4.0 для многомерных данных.
-# min_samples ставим равным размерности данных или чуть больше.
+# -- DBSCAN --
 db_eps = 2.5
-db_min_samples = 14  # Примерно равно количеству признаков
+db_min_samples = 14  
 dbscan = DBSCAN(eps=db_eps, min_samples=db_min_samples)
 dbscan_labels = dbscan.fit_predict(X_scaled)
 
-# 4. Оценка качества
+# --- Оценка качества ---
 def calculate_metrics(name, labels, X, y_true):
     # Исключаем шум (-1) для внутренних метрик DBSCAN
     if -1 in labels:
@@ -175,12 +170,12 @@ print(results_df)
 n_noise = list(dbscan_labels).count(-1)
 print(f"\nDBSCAN: Выбросов (шум) найдено: {n_noise} ({(n_noise / len(dbscan_labels)) * 100:.2f}%)")
 
-# 5. Визуализация результатов
+# --- Визуализация результатов ---
 # PCA для 2D проекции
 pca = PCA(n_components=2)
 X_pca = pca.fit_transform(X_scaled)
 
-# Создаем DataFrame для удобства построения графиков
+# DataFrame
 viz_df = pd.DataFrame(X_pca, columns=['PC1', 'PC2'])
 viz_df['KMeans'] = kmeans_labels
 viz_df['Agglomerative'] = agg_labels
@@ -197,18 +192,14 @@ sns.scatterplot(data=viz_df, x='PC1', y='PC2', hue='Agglomerative', palette='vir
 axes[1].set_title(f'Agglomerative (k={agg_k})')
 
 # График DBSCAN
-# Отдельно красим шум
 unique_db = np.unique(dbscan_labels)
 palette_db = sns.color_palette("deep", len(unique_db))
-# Если есть шум (-1), делаем его черным или серым, но для простоты оставим стандартную палитру
 sns.scatterplot(data=viz_df, x='PC1', y='PC2', hue='DBSCAN', palette='deep', ax=axes[2], s=50)
 axes[2].set_title(f'DBSCAN (eps={db_eps}, min={db_min_samples})')
 
 plt.tight_layout()
 plt.show()
 
-# 6. Дополнительно: Boxplots и Гистограммы
-# Добавляем метки лучшей модели (например, KMeans) к исходным данным
 X_final = X.copy()
 X_final['Cluster'] = kmeans_labels
 
@@ -218,7 +209,7 @@ sns.countplot(x='Cluster', data=X_final, palette='viridis')
 plt.title("Распределение размеров кластеров (KMeans)")
 plt.show()
 
-# Boxplot для анализа признаков (берем первые 3 признака для примера)
+# Boxplot для анализа признаков 
 features_to_plot = X.columns[:3]
 plt.figure(figsize=(15, 5))
 for i, col in enumerate(features_to_plot):

@@ -15,8 +15,9 @@ from core.pipeline import Simulation
 
 class CLI:
     def __init__(self):
-        self.m = 0
+        self.n = 0
         self.p = 0
+        self.m = 0
         self.times = []
         self.queue = []
         self.sim = None
@@ -32,8 +33,8 @@ class CLI:
         if not self.sim.queue:
             print("  (пусто)")
         else:
-            for p in self.sim.queue[:3]: # ТЗ пункт 4: не менее 3-х пар
-                print(f"  Пара #{p['id']}: A {p['a']}={format_bin(p['a'], self.sim.p)} | B {p['b']}={format_bin(p['b'], self.sim.p)}")
+            for p_item in self.sim.queue[:3]:
+                print(f"  Пара #{p_item['id']}: A {p_item['a']}={format_bin(p_item['a'], self.sim.p)} | B {p_item['b']}={format_bin(p_item['b'], self.sim.p)}")
             if len(self.sim.queue) > 3:
                 print(f"  ... и еще {len(self.sim.queue) - 3} пар(-ы)")
 
@@ -42,12 +43,15 @@ class CLI:
             print(f"\033[1;95mЭтап {i + 1}\033[0m")
             if s.current_pair:
                 print(f"  Номер пары: #{s.current_pair['id']}")
-                print(f"  Частичная сумма:        \033[92m{format_bin(s.p_sum, 2 * self.sim.p)}\033[0m")
-                print(f"  Частичное произведение: \033[93m{format_bin(s.p_prod, 2 * self.sim.p)}\033[0m")
+                bits_per_stage = (self.sim.p + self.sim.n - 1) // self.sim.n
+                start_bit = s.current_bit_idx - (bits_per_stage if s.current_bit_idx > 0 else 0)
+                end_bit = s.current_bit_idx
+                print(f"  Обработано бит: {start_bit}-{end_bit} из {self.sim.p}")
+                print(f"  Частичная сумма:        \033[92m{format_bin(s.partial_result, 2 * self.sim.p)}\033[0m")
             else:
                 print("  Номер пары: (ожидание)")
+                print("  Обработано бит: -")
                 print("  Частичная сумма:        -")
-                print("  Частичное произведение: -")
             print("\033[90m" + "." * 60 + "\033[0m")
             
         print("\n\033[1;94m[ Результат (выход) ]\033[0m")
@@ -65,12 +69,13 @@ class CLI:
     def run(self):
         try:
             print("\033[1;96mНастройка модели арифметического конвейера\033[0m")
-            self.p = int(input("Введите разрядность p (например, 4): "))
+            self.p = int(input("Введите разрядность p (количество бит): "))
+            self.n = int(input("Введите количество этапов n конвейера: "))
             self.m = int(input("Введите количество пар m (например, 5): "))
             
             self.times = []
             print("Настройка времени выполнения (в тактах) для каждого этапа:")
-            for i in range(self.p):
+            for i in range(self.n):
                 t = int(input(f"  Время для этапа {i + 1}: "))
                 self.times.append(t)
         except ValueError:
@@ -94,7 +99,7 @@ class CLI:
             print("\033[91mНеправильный выбор режима.\033[0m")
             sys.exit(1)
 
-        self.sim = Simulation(self.p, self.queue, self.times)
+        self.sim = Simulation(self.p, self.n, self.queue, self.times)
 
         while True:
             self.display_simulation()
@@ -133,4 +138,4 @@ class CLI:
                     max_m = 20
                 
                 print("\033[96mПостроение графиков...\033[0m")
-                plot_metrics(self.p, self.times, max_m)
+                plot_metrics(self.p, self.n, self.times, max_m)

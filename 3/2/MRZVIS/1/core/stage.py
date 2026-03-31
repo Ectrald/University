@@ -14,5 +14,7 @@ class Stage:
         self.cycles_required = cycles_required
         self.current_pair = None
         self.cycles_left = 0
-        self.p_sum = 0
-        self.p_prod = 0
+        self.bits_processed = 0
+        self.partial_result = 0
+        self.current_bit_idx = 0
+        self.is_complete = False

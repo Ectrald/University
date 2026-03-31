@@ -91,7 +91,7 @@ for col in columns_to_compare:
 # Пометка выброса
 red_wine_quality_with_releases = red_wine_quality_unique.copy()
 
-red_wine_quality_with_releases['Release'] = 0  # сначала всё нормальное
+red_wine_quality_with_releases['Release'] = 0 
 for column in list_of_numerical_column:
     Q1 = red_wine_quality_unique[column].quantile(0.25)
     Q3 = red_wine_quality_unique[column].quantile(0.75)
@@ -99,7 +99,6 @@ for column in list_of_numerical_column:
     lower_bound = Q1 - 1.5 * IQR
     upper_bound = Q3 + 1.5 * IQR
 
-    # если есть выброс — ставим 1
     red_wine_quality_with_releases['Release'] |= (
         (red_wine_quality_with_releases[column] < lower_bound) |
         (red_wine_quality_with_releases[column] > upper_bound)
@@ -197,40 +196,7 @@ features_train_poly_better["freshness_index"] = ((features_train_poly_better["pH
                                                      / (features_train_poly_better["volatile acidity"] + EPS))
 
 features_test_poly_better = features_test.copy()
-# 1. Буферная система
-features_test_poly_better["acid_pH_ratio"] = features_test_poly_better["fixed acidity"] / (features_test_poly_better["pH"]
-                                                                                                 + EPS)
-features_test_poly_better["total_acidity_effect"] = (features_test_poly_better["fixed acidity"]
-                                                          + features_test_poly_better["volatile acidity"]
-                                                          - features_test_poly_better["citric acid"])
 
-# 2. Баланс сахара и спирта
-features_test_poly_better["alcohol_sugar_density"] = (features_test_poly_better["alcohol"]
-                                                           * features_test_poly_better["residual sugar"]
-                                                           / (features_test_poly_better["density"] + EPS))
-features_test_poly_better["sweetness_balance"] = (features_test_poly_better["residual sugar"]
-                                                       / (features_test_poly_better["alcohol"] + EPS))
-
-# 3. Сера и кислотность
-features_test_poly_better["sulfur_balance"] = (features_test_poly_better["free sulfur dioxide"]
-                                                    / (features_test_poly_better["total sulfur dioxide"] + EPS))
-features_test_poly_better["sulfur_acidity_interaction"] = (features_test_poly_better["total sulfur dioxide"]
-                                                                * features_test_poly_better["volatile acidity"])
-
-# 4. Минерализация
-features_test_poly_better["salty_mineral_effect"] = features_test_poly_better["chlorides"] * features_test_poly_better["sulphates"]
-features_test_poly_better["chlorides_to_density"] = features_test_poly_better["chlorides"] / (features_test_poly_better["density"] + EPS)
-
-# 5. Комплексный индекс структуры
-features_test_poly_better["structure_index"] = (
-        features_test_poly_better["alcohol"] * features_test_poly_better["fixed acidity"] * features_test_poly_better["sulphates"]
-        / (features_test_poly_better["volatile acidity"] + features_test_poly_better["chlorides"] + EPS)
-    )
-
-# 6. Индекс свежести
-features_test_poly_better["freshness_index"] = ((features_test_poly_better["pH"]
-                                                     * features_test_poly_better["citric acid"])
-                                                     / (features_test_poly_better["volatile acidity"] + EPS))
 
 # Нормализация датасетов с новыми столбцами
 robust_scaler_poly = preprocessing.RobustScaler()
@@ -408,9 +374,9 @@ results = pd.DataFrame({
 
 results['Overfitting (R² Train - Test)'] = results['R² (Train)'] - results['R² (Test)']
 pd.set_option('display.width', 1000)
-pd.set_option('display.max_columns', None)  # Показать все столбцы
-pd.set_option('display.max_colwidth', None)  # Показать полное содержимое ячеек
-print("\n===== Общая сравнительная таблица моделей =====")
+pd.set_option('display.max_columns', None)  
+pd.set_option('display.max_colwidth', None)  
+print("\n--- Общая сравнительная таблица моделей ---")
 print(results)
 
 # Отдельная таблица для сравнения Полиномиальных моделей
@@ -420,7 +386,7 @@ poly_comparison = pd.DataFrame({
     'Polynomial (better features)': [poly_better_mae, mse_poly_better, rmse_poly_better, r2_poly_better_test, r2_poly_better_train]
 })
 
-print("\n===== Сравнение полиномиальных моделей =====")
+print("\n--- Сравнение полиномиальных моделей ---")
 print(poly_comparison)
 
 # Отдельная таблица для сравнения Ridge и RidgeCV
@@ -430,7 +396,7 @@ ridge_comparison = pd.DataFrame({
     'RidgeCV': [ridge_cv_mae, mse_ridge_cv, rmse_ridge_cv, r2_ridge_cv_test, r2_ridge_cv_train]
 })
 
-print("\n===== Сравнение Ridge моделей =====")
+print("\n--- Сравнение Ridge моделей ---")
 print(ridge_comparison)
 
 # Отдельная таблица для сравнения Lasso и LassoCV
@@ -440,11 +406,11 @@ lasso_comparison = pd.DataFrame({
     'LassoCV': [lasso_cv_mae, mse_lasso_cv, rmse_lasso_cv, r2_lasso_cv_test, r2_lasso_cv_train]
 })
 
-print("\n===== Сравнение Lasso моделей =====")
+print("\n--- Сравнение Lasso моделей ---")
 print(lasso_comparison)
 
 
-# === Анализ важности признаков для лучшей модели (ElasticNetCV) ===
+# --- Анализ важности признаков для модели ElasticNetCV ---
 best_model = elastic_net_model.named_steps['elasticnetcv']
 
 # Получаем имена признаков после полиномиального преобразования
@@ -460,7 +426,7 @@ importance_df = pd.DataFrame({
     'Абсолютная важность': np.abs(coef)
 }).sort_values(by='Абсолютная важность', ascending=False)
 
-print("\n===== Важность признаков для ElasticNetCV =====")
+print("\n--- Важность признаков для ElasticNetCV ---")
 print(importance_df.head(15))
 
 # Визуализация важности признаков
@@ -477,7 +443,7 @@ plt.ylabel("Признак")
 plt.tight_layout()
 plt.show()
 
-# === Сравнение предсказаний с эталонными ===
+# --- Сравнение предсказаний с эталонными ---
 plt.figure(figsize=(6, 6))
 plt.scatter(target_test, target_predict_elastic_net, alpha=0.6, edgecolor='k')
 plt.plot([target_test.min(), target_test.max()],

@@ -1,0 +1,16 @@
+spacy
+nltk
+lemminflect
+pdfplumber
+python-docx
+striprtf
+SQLAlchemy
+pandas
+tqdm
+rich
+wordfreq
+fastapi
+uvicorn
+streamlit
+requests
+python-multipart
