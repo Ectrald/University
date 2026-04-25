@@ -1,0 +1,782 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://example.org/math#"
+     xml:base="http://example.org/math"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://example.org/math">
+        <owl:imports rdf:resource="http://example.org/philosophy"/>
+        <owl:imports rdf:resource="http://example.org/physics"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://example.org/math#associatedWith -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/math#associatedWith">
+        <rdfs:domain rdf:resource="http://example.org/math#Mathematician"/>
+        <rdfs:range rdf:resource="http://example.org/math#Institution"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://example.org/math#authoredWork -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/math#authoredWork">
+        <rdfs:domain rdf:resource="http://example.org/math#Philosopher"/>
+        <rdfs:range rdf:resource="http://example.org/math#PhilosophicalWork"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://example.org/math#belongsToEra -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/math#belongsToEra">
+        <owl:inverseOf rdf:resource="http://example.org/math#hasMathematician"/>
+        <rdfs:domain rdf:resource="http://example.org/math#Mathematician"/>
+        <rdfs:range rdf:resource="http://example.org/math#HistoricalEra"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://example.org/math#developedBy -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/math#developedBy">
+        <rdfs:domain rdf:resource="http://example.org/math#Theory"/>
+        <rdfs:range rdf:resource="http://example.org/math#Mathematician"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://example.org/math#discoveredLaw -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/math#discoveredLaw">
+        <rdfs:domain rdf:resource="http://example.org/math#Physicist"/>
+        <rdfs:range rdf:resource="http://example.org/math#PhysicalLaw"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://example.org/math#establishedBy -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/math#establishedBy">
+        <rdfs:domain rdf:resource="http://example.org/math#ScientificSchool"/>
+        <rdfs:range rdf:resource="http://example.org/math#Mathematician"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://example.org/math#formulatedBy -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/math#formulatedBy">
+        <rdfs:domain rdf:resource="http://example.org/math#Theorem"/>
+        <rdfs:range rdf:resource="http://example.org/math#Mathematician"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://example.org/math#foundedBy -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/math#foundedBy">
+        <rdfs:domain rdf:resource="http://example.org/math#BranchOfMathematics"/>
+        <rdfs:range rdf:resource="http://example.org/math#Mathematician"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://example.org/math#hasMathematician -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/math#hasMathematician"/>
+    
+
+
+    <!-- http://example.org/math#introducedBy -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/math#introducedBy">
+        <rdfs:domain rdf:resource="http://example.org/math#MathematicalConcept"/>
+        <rdfs:range rdf:resource="http://example.org/math#Mathematician"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://example.org/math#inventedBy -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/math#inventedBy">
+        <rdfs:domain rdf:resource="http://example.org/math#MathematicalMethod"/>
+        <rdfs:range rdf:resource="http://example.org/math#Mathematician"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://example.org/math#popularizedBy -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/math#popularizedBy">
+        <rdfs:domain rdf:resource="http://example.org/math#NumberSystem"/>
+        <rdfs:range rdf:resource="http://example.org/math#Mathematician"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://example.org/math#studiedConcept -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/math#studiedConcept">
+        <rdfs:domain rdf:resource="http://example.org/math#Physicist"/>
+        <rdfs:range rdf:resource="http://example.org/math#PhysicalConcept"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://example.org/math#writtenBy -->
+
+    <owl:ObjectProperty rdf:about="http://example.org/math#writtenBy">
+        <rdfs:domain rdf:resource="http://example.org/math#ScientificWork"/>
+        <rdfs:range rdf:resource="http://example.org/math#Mathematician"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://example.org/math#branchName -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/math#branchName">
+        <rdfs:domain rdf:resource="http://example.org/math#BranchOfMathematics"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/math#conceptName -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/math#conceptName">
+        <rdfs:domain rdf:resource="http://example.org/math#MathematicalConcept"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/math#eraName -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/math#eraName">
+        <rdfs:domain rdf:resource="http://example.org/math#HistoricalEra"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/math#hasName -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/math#hasName">
+        <rdfs:domain rdf:resource="http://example.org/math#Mathematician"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/math#institutionName -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/math#institutionName">
+        <rdfs:domain rdf:resource="http://example.org/math#Institution"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/math#lawName -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/math#lawName">
+        <rdfs:domain rdf:resource="http://example.org/math#PhysicalLaw"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/math#methodName -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/math#methodName">
+        <rdfs:domain rdf:resource="http://example.org/math#MathematicalMethod"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/math#schoolName -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/math#schoolName">
+        <rdfs:domain rdf:resource="http://example.org/math#ScientificSchool"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/math#systemName -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/math#systemName">
+        <rdfs:domain rdf:resource="http://example.org/math#NumberSystem"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/math#theoremName -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/math#theoremName">
+        <rdfs:domain rdf:resource="http://example.org/math#Theorem"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/math#theoryName -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/math#theoryName">
+        <rdfs:domain rdf:resource="http://example.org/math#Theory"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://example.org/math#workTitle -->
+
+    <owl:DatatypeProperty rdf:about="http://example.org/math#workTitle">
+        <rdfs:domain rdf:resource="http://example.org/math#ScientificWork"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://example.org/math#BranchOfMathematics -->
+
+    <owl:Class rdf:about="http://example.org/math#BranchOfMathematics"/>
+    
+
+
+    <!-- http://example.org/math#HistoricalEra -->
+
+    <owl:Class rdf:about="http://example.org/math#HistoricalEra"/>
+    
+
+
+    <!-- http://example.org/math#Institution -->
+
+    <owl:Class rdf:about="http://example.org/math#Institution"/>
+    
+
+
+    <!-- http://example.org/math#MathematicalConcept -->
+
+    <owl:Class rdf:about="http://example.org/math#MathematicalConcept"/>
+    
+
+
+    <!-- http://example.org/math#MathematicalMethod -->
+
+    <owl:Class rdf:about="http://example.org/math#MathematicalMethod"/>
+    
+
+
+    <!-- http://example.org/math#Mathematician -->
+
+    <owl:Class rdf:about="http://example.org/math#Mathematician"/>
+    
+
+
+    <!-- http://example.org/math#NumberSystem -->
+
+    <owl:Class rdf:about="http://example.org/math#NumberSystem"/>
+    
+
+
+    <!-- http://example.org/math#Philosopher -->
+
+    <owl:Class rdf:about="http://example.org/math#Philosopher"/>
+    
+
+
+    <!-- http://example.org/math#PhilosophicalWork -->
+
+    <owl:Class rdf:about="http://example.org/math#PhilosophicalWork"/>
+    
+
+
+    <!-- http://example.org/math#PhysicalConcept -->
+
+    <owl:Class rdf:about="http://example.org/math#PhysicalConcept"/>
+    
+
+
+    <!-- http://example.org/math#PhysicalLaw -->
+
+    <owl:Class rdf:about="http://example.org/math#PhysicalLaw"/>
+    
+
+
+    <!-- http://example.org/math#Physicist -->
+
+    <owl:Class rdf:about="http://example.org/math#Physicist"/>
+    
+
+
+    <!-- http://example.org/math#ScientificSchool -->
+
+    <owl:Class rdf:about="http://example.org/math#ScientificSchool"/>
+    
+
+
+    <!-- http://example.org/math#ScientificWork -->
+
+    <owl:Class rdf:about="http://example.org/math#ScientificWork"/>
+    
+
+
+    <!-- http://example.org/math#Theorem -->
+
+    <owl:Class rdf:about="http://example.org/math#Theorem"/>
+    
+
+
+    <!-- http://example.org/math#Theory -->
+
+    <owl:Class rdf:about="http://example.org/math#Theory"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://example.org/math#AlKhwarizmi -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#AlKhwarizmi">
+        <rdf:type rdf:resource="http://example.org/math#Mathematician"/>
+        <hasName>аль-Хорезми</hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#AlbertEinstein -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#AlbertEinstein">
+        <rdf:type rdf:resource="http://example.org/math#Physicist"/>
+        <belongsToEra rdf:resource="http://example.org/math#ModernEra"/>
+        <hasName>Альберт Эйнштейн</hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Algorithm -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Algorithm">
+        <rdf:type rdf:resource="http://example.org/math#MathematicalConcept"/>
+        <introducedBy rdf:resource="http://example.org/math#AlKhwarizmi"/>
+        <conceptName>Алгоритм</conceptName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#AnalyticalGeometry -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#AnalyticalGeometry">
+        <rdf:type rdf:resource="http://example.org/math#BranchOfMathematics"/>
+        <foundedBy rdf:resource="http://example.org/math#Descartes"/>
+        <branchName>Аналитическая геометрия</branchName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Antiquity -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Antiquity">
+        <rdf:type rdf:resource="http://example.org/math#HistoricalEra"/>
+        <eraName>Античность</eraName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Archimedes -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Archimedes">
+        <rdf:type rdf:resource="http://example.org/math#Mathematician"/>
+        <rdf:type rdf:resource="http://example.org/math#Physicist"/>
+        <belongsToEra rdf:resource="http://example.org/math#Antiquity"/>
+        <discoveredLaw rdf:resource="http://example.org/math#ArchimedesPrinciple"/>
+        <hasName>Архимед</hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#ArchimedesPrinciple -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#ArchimedesPrinciple">
+        <rdf:type rdf:resource="http://example.org/math#PhysicalLaw"/>
+        <lawName>Закон Архимеда</lawName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Aristotle -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Aristotle">
+        <rdf:type rdf:resource="http://example.org/math#Philosopher"/>
+        <belongsToEra rdf:resource="http://example.org/math#Antiquity"/>
+        <hasName>Аристотель</hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Arithmetica -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Arithmetica">
+        <rdf:type rdf:resource="http://example.org/math#ScientificWork"/>
+        <writtenBy rdf:resource="http://example.org/math#Diophantus"/>
+        <workTitle>Арифметика</workTitle>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#BinarySystem -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#BinarySystem">
+        <rdf:type rdf:resource="http://example.org/math#NumberSystem"/>
+        <popularizedBy rdf:resource="http://example.org/math#Leibniz"/>
+        <systemName>Двоичная система счисления</systemName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Bourbaki -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Bourbaki">
+        <rdf:type rdf:resource="http://example.org/math#Mathematician"/>
+        <hasName>Николя Бурбаки</hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#BourbakiGroup -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#BourbakiGroup">
+        <rdf:type rdf:resource="http://example.org/math#ScientificSchool"/>
+        <establishedBy rdf:resource="http://example.org/math#Bourbaki"/>
+        <schoolName>Группа Бурбаки</schoolName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Cambridge -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Cambridge">
+        <rdf:type rdf:resource="http://example.org/math#Institution"/>
+        <institutionName>Кембриджский университет</institutionName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Cantor -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Cantor">
+        <rdf:type rdf:resource="http://example.org/math#Mathematician"/>
+        <hasName>Георг Кантор</hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#CoordinateMethod -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#CoordinateMethod">
+        <rdf:type rdf:resource="http://example.org/math#MathematicalMethod"/>
+        <inventedBy rdf:resource="http://example.org/math#Descartes"/>
+        <methodName>Метод координат</methodName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#DecimalSystem -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#DecimalSystem">
+        <rdf:type rdf:resource="http://example.org/math#NumberSystem"/>
+        <popularizedBy rdf:resource="http://example.org/math#AlKhwarizmi"/>
+        <systemName>Десятичная система</systemName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Descartes -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Descartes">
+        <rdf:type rdf:resource="http://example.org/math#Mathematician"/>
+        <rdf:type rdf:resource="http://example.org/math#Philosopher"/>
+        <rdf:type rdf:resource="http://example.org/math#Physicist"/>
+        <authoredWork rdf:resource="http://example.org/math#Meditations"/>
+        <belongsToEra rdf:resource="http://example.org/math#ModernEra"/>
+        <studiedConcept rdf:resource="http://example.org/math#Optics"/>
+        <hasName>Рене Декарт</hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#DiagonalMethod -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#DiagonalMethod">
+        <rdf:type rdf:resource="http://example.org/math#MathematicalMethod"/>
+        <inventedBy rdf:resource="http://example.org/math#Cantor"/>
+        <methodName>Диагональный метод</methodName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Diophantus -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Diophantus">
+        <rdf:type rdf:resource="http://example.org/math#Mathematician"/>
+        <belongsToEra rdf:resource="http://example.org/math#Antiquity"/>
+        <hasName>Диофант</hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Elements -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Elements">
+        <rdf:type rdf:resource="http://example.org/math#ScientificWork"/>
+        <writtenBy rdf:resource="http://example.org/math#Euclid"/>
+        <workTitle>Начала</workTitle>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Euclid -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Euclid">
+        <rdf:type rdf:resource="http://example.org/math#Mathematician"/>
+        <belongsToEra rdf:resource="http://example.org/math#Antiquity"/>
+        <hasName>Евклид</hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Fermat -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Fermat">
+        <rdf:type rdf:resource="http://example.org/math#Mathematician"/>
+        <belongsToEra rdf:resource="http://example.org/math#ModernEra"/>
+        <hasName>Пьер Ферма</hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#FermatTheorem -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#FermatTheorem">
+        <rdf:type rdf:resource="http://example.org/math#Theorem"/>
+        <formulatedBy rdf:resource="http://example.org/math#Fermat"/>
+        <theoremName>Великая теорема Ферма</theoremName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#IsaacNewton -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#IsaacNewton">
+        <rdf:type rdf:resource="http://example.org/math#Mathematician"/>
+        <rdf:type rdf:resource="http://example.org/math#Physicist"/>
+        <associatedWith rdf:resource="http://example.org/math#Cambridge"/>
+        <belongsToEra rdf:resource="http://example.org/math#ModernEra"/>
+        <discoveredLaw rdf:resource="http://example.org/math#LawOfGravity"/>
+        <studiedConcept rdf:resource="http://example.org/math#Optics"/>
+        <hasName>Исаак Ньютон</hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#LawOfGravity -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#LawOfGravity">
+        <rdf:type rdf:resource="http://example.org/math#PhysicalLaw"/>
+        <lawName>Закон всемирного тяготения</lawName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Leibniz -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Leibniz">
+        <rdf:type rdf:resource="http://example.org/math#Mathematician"/>
+        <rdf:type rdf:resource="http://example.org/math#Philosopher"/>
+        <authoredWork rdf:resource="http://example.org/math#Monadology"/>
+        <belongsToEra rdf:resource="http://example.org/math#ModernEra"/>
+        <hasName>Готфрид Лейбниц</hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#MathematicalAnalysis -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#MathematicalAnalysis">
+        <rdf:type rdf:resource="http://example.org/math#BranchOfMathematics"/>
+        <foundedBy rdf:resource="http://example.org/math#IsaacNewton"/>
+        <foundedBy rdf:resource="http://example.org/math#Leibniz"/>
+        <branchName>Математический анализ</branchName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Meditations -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Meditations">
+        <rdf:type rdf:resource="http://example.org/math#PhilosophicalWork"/>
+        <workTitle>Размышления о первой философии</workTitle>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#ModernEra -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#ModernEra">
+        <rdf:type rdf:resource="http://example.org/math#HistoricalEra"/>
+        <eraName>Новое время</eraName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Monadology -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Monadology">
+        <rdf:type rdf:resource="http://example.org/math#PhilosophicalWork"/>
+        <workTitle>Монадология</workTitle>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#NumberTheory -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#NumberTheory">
+        <rdf:type rdf:resource="http://example.org/math#Theory"/>
+        <developedBy rdf:resource="http://example.org/math#Pythagoras"/>
+        <theoryName>Теория чисел</theoryName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Optics -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Optics">
+        <rdf:type rdf:resource="http://example.org/math#PhysicalConcept"/>
+        <conceptName>Оптика</conceptName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Plato -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Plato">
+        <rdf:type rdf:resource="http://example.org/math#Philosopher"/>
+        <belongsToEra rdf:resource="http://example.org/math#Antiquity"/>
+        <hasName>Платон</hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Pythagoras -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Pythagoras">
+        <rdf:type rdf:resource="http://example.org/math#Mathematician"/>
+        <rdf:type rdf:resource="http://example.org/math#Philosopher"/>
+        <belongsToEra rdf:resource="http://example.org/math#Antiquity"/>
+        <hasName>Пифагор</hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#PythagorasTheorem -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#PythagorasTheorem">
+        <rdf:type rdf:resource="http://example.org/math#Theorem"/>
+        <formulatedBy rdf:resource="http://example.org/math#Pythagoras"/>
+        <theoremName>Теорема Пифагора</theoremName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#PythagoreanSchool -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#PythagoreanSchool">
+        <rdf:type rdf:resource="http://example.org/math#ScientificSchool"/>
+        <establishedBy rdf:resource="http://example.org/math#Pythagoras"/>
+        <schoolName>Пифагорейская школа</schoolName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#SetTheory -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#SetTheory">
+        <rdf:type rdf:resource="http://example.org/math#Theory"/>
+        <developedBy rdf:resource="http://example.org/math#Cantor"/>
+        <theoryName>Теория множеств</theoryName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#Turing -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#Turing">
+        <rdf:type rdf:resource="http://example.org/math#Mathematician"/>
+        <hasName>Алан Тьюринг</hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://example.org/math#TuringMachine -->
+
+    <owl:NamedIndividual rdf:about="http://example.org/math#TuringMachine">
+        <rdf:type rdf:resource="http://example.org/math#MathematicalConcept"/>
+        <introducedBy rdf:resource="http://example.org/math#Turing"/>
+        <conceptName>Машина Тьюринга</conceptName>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+

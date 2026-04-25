@@ -118,3 +118,20 @@
     :schoolName "Пифагорейская школа"^^xsd:string ; :establishedBy :Pythagoras .
 :BourbakiGroup a owl:NamedIndividual, :ScientificSchool ; 
     :schoolName "Группа Бурбаки"^^xsd:string ; :establishedBy :Bourbaki .
+
+### --- ДОПОЛНИТЕЛЬНЫЕ КЛАССЫ И ЭКЗЕМПЛЯРЫ (для слияния) --- ###
+:Institution a owl:Class .
+:institutionName a owl:DatatypeProperty ; rdfs:domain :Institution ; rdfs:range xsd:string .
+:associatedWith a owl:ObjectProperty ; rdfs:domain :Mathematician ; rdfs:range :Institution .
+
+:IsaacNewton a owl:NamedIndividual, :Mathematician ; 
+    :hasName "Исаак Ньютон"^^xsd:string ; :belongsToEra :ModernEra .
+:Archimedes a owl:NamedIndividual, :Mathematician ; 
+    :hasName "Архимед"^^xsd:string ; :belongsToEra :Antiquity .
+
+# И Лейбниц, и Ньютон являются основателями матанализа - отличный узел для графа!
+:MathematicalAnalysis :foundedBy :IsaacNewton . 
+
+:Cambridge a owl:NamedIndividual, :Institution ; 
+    :institutionName "Кембриджский университет"^^xsd:string .
+:IsaacNewton :associatedWith :Cambridge .

@@ -1,0 +1,119 @@
+<html><head><meta charset='utf-8'>
+
+    <style>
+      body  { font-family: "Cascadia Code", "Consolas", monospace; font-size: 14px; }
+      h2    { font-family: Arial, sans-serif; }
+      table { border-collapse: collapse; margin-bottom: 24px; }
+      th,td { border: 1px solid #444; padding: 6px 8px; vertical-align: top; }
+      th    { background: #eef; }
+      .empty{ background: #f7f7f7; color: #999; text-align: center; }
+      .in   { background: #fefaf0; }
+      .out  { background: #f0faff; }
+    </style>
+    
+</head><body>
+<h2>Исходные пары (не менее трёх)</h2>
+<table><tr><th>i</th><th>A (множимое)</th><th>B (множитель)</th></tr>
+<tr><td>1</td><td>15 = 0000 1111</td><td>15 = 1111</td></tr>
+<tr><td>2</td><td>1 = 0000 0001</td><td>7 = 0111</td></tr>
+<tr><td>3</td><td>9 = 0000 1001</td><td>11 = 1011</td></tr>
+<tr><td>4</td><td>6 = 0000 0110</td><td>5 = 0101</td></tr>
+<tr><td>5</td><td>3 = 0000 0011</td><td>13 = 1101</td></tr>
+<tr><td>6</td><td>3 = 0000 0011</td><td>0 = 0000</td></tr>
+<tr><td>7</td><td>8 = 0000 1000</td><td>7 = 0111</td></tr>
+<tr><td>8</td><td>7 = 0000 0111</td><td>4 = 0100</td></tr>
+<tr><td>9</td><td>3 = 0000 0011</td><td>2 = 0010</td></tr>
+<tr><td>10</td><td>13 = 0000 1101</td><td>1 = 0001</td></tr>
+</table>
+<h2>Пошаговая работа конвейера</h2>
+<table><tr><th>Этап \ Такт</th>
+<th>Такт 1<br>t = 1 у.в.е.</th>
+<th>Такт 2<br>t = 2 у.в.е.</th>
+<th>Такт 3<br>t = 3 у.в.е.</th>
+<th>Такт 4<br>t = 4 у.в.е.</th>
+<th>Такт 5<br>t = 5 у.в.е.</th>
+<th>Такт 6<br>t = 6 у.в.е.</th>
+<th>Такт 7<br>t = 7 у.в.е.</th>
+<th>Такт 8<br>t = 8 у.в.е.</th>
+<th>Такт 9<br>t = 9 у.в.е.</th>
+<th>Такт 10<br>t = 10 у.в.е.</th>
+<th>Такт 11<br>t = 11 у.в.е.</th>
+<th>Такт 12<br>t = 12 у.в.е.</th>
+<th>Такт 13<br>t = 13 у.в.е.</th>
+</tr>
+<tr><td><b>Этап 1</b></td>
+<td class='out'><small>i = 1</small><br>M&nbsp;=&nbsp;0001 1110 (30)<br>F&nbsp;=&nbsp;0111 (7)<br>PS=&nbsp;0000 1111 (15)</td>
+<td class='out'><small>i = 2</small><br>M&nbsp;=&nbsp;0000 0010 (2)<br>F&nbsp;=&nbsp;0011 (3)<br>PS=&nbsp;0000 0001 (1)</td>
+<td class='out'><small>i = 3</small><br>M&nbsp;=&nbsp;0001 0010 (18)<br>F&nbsp;=&nbsp;0101 (5)<br>PS=&nbsp;0000 1001 (9)</td>
+<td class='out'><small>i = 4</small><br>M&nbsp;=&nbsp;0000 1100 (12)<br>F&nbsp;=&nbsp;0010 (2)<br>PS=&nbsp;0000 0110 (6)</td>
+<td class='out'><small>i = 5</small><br>M&nbsp;=&nbsp;0000 0110 (6)<br>F&nbsp;=&nbsp;0110 (6)<br>PS=&nbsp;0000 0011 (3)</td>
+<td class='out'><small>i = 6</small><br>M&nbsp;=&nbsp;0000 0110 (6)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0000 0000 (0)</td>
+<td class='out'><small>i = 7</small><br>M&nbsp;=&nbsp;0001 0000 (16)<br>F&nbsp;=&nbsp;0011 (3)<br>PS=&nbsp;0000 1000 (8)</td>
+<td class='out'><small>i = 8</small><br>M&nbsp;=&nbsp;0000 1110 (14)<br>F&nbsp;=&nbsp;0010 (2)<br>PS=&nbsp;0000 0000 (0)</td>
+<td class='out'><small>i = 9</small><br>M&nbsp;=&nbsp;0000 0110 (6)<br>F&nbsp;=&nbsp;0001 (1)<br>PS=&nbsp;0000 0000 (0)</td>
+<td class='out'><small>i = 10</small><br>M&nbsp;=&nbsp;0001 1010 (26)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0000 1101 (13)</td>
+<td class='empty'>—</td>
+<td class='empty'>—</td>
+<td class='empty'>—</td>
+</tr>
+<tr><td><b>Этап 2</b></td>
+<td class='empty'>—</td>
+<td class='out'><small>i = 1</small><br>M&nbsp;=&nbsp;0011 1100 (60)<br>F&nbsp;=&nbsp;0011 (3)<br>PS=&nbsp;0010 1101 (45)</td>
+<td class='out'><small>i = 2</small><br>M&nbsp;=&nbsp;0000 0100 (4)<br>F&nbsp;=&nbsp;0001 (1)<br>PS=&nbsp;0000 0011 (3)</td>
+<td class='out'><small>i = 3</small><br>M&nbsp;=&nbsp;0010 0100 (36)<br>F&nbsp;=&nbsp;0010 (2)<br>PS=&nbsp;0001 1011 (27)</td>
+<td class='out'><small>i = 4</small><br>M&nbsp;=&nbsp;0001 1000 (24)<br>F&nbsp;=&nbsp;0001 (1)<br>PS=&nbsp;0000 0110 (6)</td>
+<td class='out'><small>i = 5</small><br>M&nbsp;=&nbsp;0000 1100 (12)<br>F&nbsp;=&nbsp;0011 (3)<br>PS=&nbsp;0000 0011 (3)</td>
+<td class='out'><small>i = 6</small><br>M&nbsp;=&nbsp;0000 1100 (12)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0000 0000 (0)</td>
+<td class='out'><small>i = 7</small><br>M&nbsp;=&nbsp;0010 0000 (32)<br>F&nbsp;=&nbsp;0001 (1)<br>PS=&nbsp;0001 1000 (24)</td>
+<td class='out'><small>i = 8</small><br>M&nbsp;=&nbsp;0001 1100 (28)<br>F&nbsp;=&nbsp;0001 (1)<br>PS=&nbsp;0000 0000 (0)</td>
+<td class='out'><small>i = 9</small><br>M&nbsp;=&nbsp;0000 1100 (12)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0000 0110 (6)</td>
+<td class='out'><small>i = 10</small><br>M&nbsp;=&nbsp;0011 0100 (52)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0000 1101 (13)</td>
+<td class='empty'>—</td>
+<td class='empty'>—</td>
+</tr>
+<tr><td><b>Этап 3</b></td>
+<td class='empty'>—</td>
+<td class='empty'>—</td>
+<td class='out'><small>i = 1</small><br>M&nbsp;=&nbsp;0111 1000 (120)<br>F&nbsp;=&nbsp;0001 (1)<br>PS=&nbsp;0110 1001 (105)</td>
+<td class='out'><small>i = 2</small><br>M&nbsp;=&nbsp;0000 1000 (8)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0000 0111 (7)</td>
+<td class='out'><small>i = 3</small><br>M&nbsp;=&nbsp;0100 1000 (72)<br>F&nbsp;=&nbsp;0001 (1)<br>PS=&nbsp;0001 1011 (27)</td>
+<td class='out'><small>i = 4</small><br>M&nbsp;=&nbsp;0011 0000 (48)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0001 1110 (30)</td>
+<td class='out'><small>i = 5</small><br>M&nbsp;=&nbsp;0001 1000 (24)<br>F&nbsp;=&nbsp;0001 (1)<br>PS=&nbsp;0000 1111 (15)</td>
+<td class='out'><small>i = 6</small><br>M&nbsp;=&nbsp;0001 1000 (24)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0000 0000 (0)</td>
+<td class='out'><small>i = 7</small><br>M&nbsp;=&nbsp;0100 0000 (64)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0011 1000 (56)</td>
+<td class='out'><small>i = 8</small><br>M&nbsp;=&nbsp;0011 1000 (56)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0001 1100 (28)</td>
+<td class='out'><small>i = 9</small><br>M&nbsp;=&nbsp;0001 1000 (24)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0000 0110 (6)</td>
+<td class='out'><small>i = 10</small><br>M&nbsp;=&nbsp;0110 1000 (104)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0000 1101 (13)</td>
+<td class='empty'>—</td>
+</tr>
+<tr><td><b>Этап 4</b></td>
+<td class='empty'>—</td>
+<td class='empty'>—</td>
+<td class='empty'>—</td>
+<td class='out'><small>i = 1</small><br>M&nbsp;=&nbsp;1111 0000 (240)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;1110 0001 (225)</td>
+<td class='out'><small>i = 2</small><br>M&nbsp;=&nbsp;0001 0000 (16)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0000 0111 (7)</td>
+<td class='out'><small>i = 3</small><br>M&nbsp;=&nbsp;1001 0000 (144)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0110 0011 (99)</td>
+<td class='out'><small>i = 4</small><br>M&nbsp;=&nbsp;0110 0000 (96)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0001 1110 (30)</td>
+<td class='out'><small>i = 5</small><br>M&nbsp;=&nbsp;0011 0000 (48)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0010 0111 (39)</td>
+<td class='out'><small>i = 6</small><br>M&nbsp;=&nbsp;0011 0000 (48)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0000 0000 (0)</td>
+<td class='out'><small>i = 7</small><br>M&nbsp;=&nbsp;1000 0000 (128)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0011 1000 (56)</td>
+<td class='out'><small>i = 8</small><br>M&nbsp;=&nbsp;0111 0000 (112)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0001 1100 (28)</td>
+<td class='out'><small>i = 9</small><br>M&nbsp;=&nbsp;0011 0000 (48)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0000 0110 (6)</td>
+<td class='out'><small>i = 10</small><br>M&nbsp;=&nbsp;1101 0000 (208)<br>F&nbsp;=&nbsp;0000 (0)<br>PS=&nbsp;0000 1101 (13)</td>
+</tr>
+</table>
+<h2>Результирующий вектор C (не менее трёх элементов)</h2>
+<table><tr><th>i</th><th>C = A·B (двоичное)</th><th>C (десятичное)</th><th>t, у.в.е.</th></tr>
+<tr><td>1</td><td>1110 0001</td><td>225</td><td>4</td></tr>
+<tr><td>2</td><td>0000 0111</td><td>7</td><td>5</td></tr>
+<tr><td>3</td><td>0110 0011</td><td>99</td><td>6</td></tr>
+<tr><td>4</td><td>0001 1110</td><td>30</td><td>7</td></tr>
+<tr><td>5</td><td>0010 0111</td><td>39</td><td>8</td></tr>
+<tr><td>6</td><td>0000 0000</td><td>0</td><td>9</td></tr>
+<tr><td>7</td><td>0011 1000</td><td>56</td><td>10</td></tr>
+<tr><td>8</td><td>0001 1100</td><td>28</td><td>11</td></tr>
+<tr><td>9</td><td>0000 0110</td><td>6</td><td>12</td></tr>
+<tr><td>10</td><td>0000 1101</td><td>13</td><td>13</td></tr>
+</table>
+<p>Время счёта на этапе: t<sub>i</sub> = 1 у.в.е.</p>
+</body></html>

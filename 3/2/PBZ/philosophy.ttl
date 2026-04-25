@@ -1,0 +1,33 @@
+@prefix : <http://example.org/math#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/philosophy> a owl:Ontology .
+
+### --- КЛАССЫ И СВОЙСТВА --- ###
+:Philosopher a owl:Class .
+:PhilosophicalWork a owl:Class .
+
+:authoredWork a owl:ObjectProperty ; rdfs:domain :Philosopher ; rdfs:range :PhilosophicalWork .
+
+### --- ЭКЗЕМПЛЯРЫ (Пересечения) --- ###
+:Pythagoras a owl:NamedIndividual, :Philosopher .
+:Descartes a owl:NamedIndividual, :Philosopher .
+:Leibniz a owl:NamedIndividual, :Philosopher .
+
+### --- НОВЫЕ ЭКЗЕМПЛЯРЫ --- ###
+:Aristotle a owl:NamedIndividual, :Philosopher ;
+    :hasName "Аристотель"^^xsd:string ; :belongsToEra :Antiquity .
+
+:Plato a owl:NamedIndividual, :Philosopher ;
+    :hasName "Платон"^^xsd:string ; :belongsToEra :Antiquity .
+
+:Meditations a owl:NamedIndividual, :PhilosophicalWork ;
+    :workTitle "Размышления о первой философии"^^xsd:string . # Переиспользуем workTitle
+:Descartes :authoredWork :Meditations .
+
+:Monadology a owl:NamedIndividual, :PhilosophicalWork ;
+    :workTitle "Монадология"^^xsd:string .
+:Leibniz :authoredWork :Monadology .

@@ -1,0 +1,26 @@
+np.asarray([ # in RGB order
+	[0, 0, 0],         # Background
+	[237, 237, 237],   # Outdoor structures
+	[181, 0, 0],       # Buildings
+	[135, 135, 135],   # Paved ground
+	[189, 107, 0],     # Non-paved ground
+	[128, 0, 128],     # Train tracks
+	[31, 123, 22],     # Plants
+	[6, 0, 130],       # Wheeled vehicles
+	[0, 168, 255],     # Water
+	[240, 255, 0],     # People
+])
+
+Labeled classes
+Each class corresponds to a pixel intensity on the label PNG files.
+
+0: Background
+1: Outdoor structures
+2: Buildings
+3: Paved ground
+4: Non-paved ground
+5: Train tracks
+6: Plants
+7: Wheeled vehicles
+8: Water
+9: People

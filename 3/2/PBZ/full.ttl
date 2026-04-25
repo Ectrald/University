@@ -1,0 +1,523 @@
+@prefix : <http://example.org/math#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://example.org/math#> .
+
+<http://example.org/math> rdf:type owl:Ontology ;
+                           owl:imports <http://example.org/philosophy> ,
+                                       <http://example.org/physics> .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://example.org/math#associatedWith
+:associatedWith rdf:type owl:ObjectProperty ;
+                rdfs:domain :Mathematician ;
+                rdfs:range :Institution .
+
+
+###  http://example.org/math#authoredWork
+:authoredWork rdf:type owl:ObjectProperty ;
+              rdfs:domain :Philosopher ;
+              rdfs:range :PhilosophicalWork .
+
+
+###  http://example.org/math#belongsToEra
+:belongsToEra rdf:type owl:ObjectProperty ;
+              owl:inverseOf :hasMathematician ;
+              rdfs:domain :Mathematician ;
+              rdfs:range :HistoricalEra .
+
+
+###  http://example.org/math#developedBy
+:developedBy rdf:type owl:ObjectProperty ;
+             rdfs:domain :Theory ;
+             rdfs:range :Mathematician .
+
+
+###  http://example.org/math#discoveredLaw
+:discoveredLaw rdf:type owl:ObjectProperty ;
+               rdfs:domain :Physicist ;
+               rdfs:range :PhysicalLaw .
+
+
+###  http://example.org/math#establishedBy
+:establishedBy rdf:type owl:ObjectProperty ;
+               rdfs:domain :ScientificSchool ;
+               rdfs:range :Mathematician .
+
+
+###  http://example.org/math#formulatedBy
+:formulatedBy rdf:type owl:ObjectProperty ;
+              rdfs:domain :Theorem ;
+              rdfs:range :Mathematician .
+
+
+###  http://example.org/math#foundedBy
+:foundedBy rdf:type owl:ObjectProperty ;
+           rdfs:domain :BranchOfMathematics ;
+           rdfs:range :Mathematician .
+
+
+###  http://example.org/math#hasMathematician
+:hasMathematician rdf:type owl:ObjectProperty .
+
+
+###  http://example.org/math#introducedBy
+:introducedBy rdf:type owl:ObjectProperty ;
+              rdfs:domain :MathematicalConcept ;
+              rdfs:range :Mathematician .
+
+
+###  http://example.org/math#inventedBy
+:inventedBy rdf:type owl:ObjectProperty ;
+            rdfs:domain :MathematicalMethod ;
+            rdfs:range :Mathematician .
+
+
+###  http://example.org/math#popularizedBy
+:popularizedBy rdf:type owl:ObjectProperty ;
+               rdfs:domain :NumberSystem ;
+               rdfs:range :Mathematician .
+
+
+###  http://example.org/math#studiedConcept
+:studiedConcept rdf:type owl:ObjectProperty ;
+                rdfs:domain :Physicist ;
+                rdfs:range :PhysicalConcept .
+
+
+###  http://example.org/math#writtenBy
+:writtenBy rdf:type owl:ObjectProperty ;
+           rdfs:domain :ScientificWork ;
+           rdfs:range :Mathematician .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://example.org/math#branchName
+:branchName rdf:type owl:DatatypeProperty ;
+            rdfs:domain :BranchOfMathematics ;
+            rdfs:range xsd:string .
+
+
+###  http://example.org/math#conceptName
+:conceptName rdf:type owl:DatatypeProperty ;
+             rdfs:domain :MathematicalConcept ;
+             rdfs:range xsd:string .
+
+
+###  http://example.org/math#eraName
+:eraName rdf:type owl:DatatypeProperty ;
+         rdfs:domain :HistoricalEra ;
+         rdfs:range xsd:string .
+
+
+###  http://example.org/math#hasName
+:hasName rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Mathematician ;
+         rdfs:range xsd:string .
+
+
+###  http://example.org/math#institutionName
+:institutionName rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Institution ;
+                 rdfs:range xsd:string .
+
+
+###  http://example.org/math#lawName
+:lawName rdf:type owl:DatatypeProperty ;
+         rdfs:domain :PhysicalLaw ;
+         rdfs:range xsd:string .
+
+
+###  http://example.org/math#methodName
+:methodName rdf:type owl:DatatypeProperty ;
+            rdfs:domain :MathematicalMethod ;
+            rdfs:range xsd:string .
+
+
+###  http://example.org/math#schoolName
+:schoolName rdf:type owl:DatatypeProperty ;
+            rdfs:domain :ScientificSchool ;
+            rdfs:range xsd:string .
+
+
+###  http://example.org/math#systemName
+:systemName rdf:type owl:DatatypeProperty ;
+            rdfs:domain :NumberSystem ;
+            rdfs:range xsd:string .
+
+
+###  http://example.org/math#theoremName
+:theoremName rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Theorem ;
+             rdfs:range xsd:string .
+
+
+###  http://example.org/math#theoryName
+:theoryName rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Theory ;
+            rdfs:range xsd:string .
+
+
+###  http://example.org/math#workTitle
+:workTitle rdf:type owl:DatatypeProperty ;
+           rdfs:domain :ScientificWork ;
+           rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://example.org/math#BranchOfMathematics
+:BranchOfMathematics rdf:type owl:Class .
+
+
+###  http://example.org/math#HistoricalEra
+:HistoricalEra rdf:type owl:Class .
+
+
+###  http://example.org/math#Institution
+:Institution rdf:type owl:Class .
+
+
+###  http://example.org/math#MathematicalConcept
+:MathematicalConcept rdf:type owl:Class .
+
+
+###  http://example.org/math#MathematicalMethod
+:MathematicalMethod rdf:type owl:Class .
+
+
+###  http://example.org/math#Mathematician
+:Mathematician rdf:type owl:Class .
+
+
+###  http://example.org/math#NumberSystem
+:NumberSystem rdf:type owl:Class .
+
+
+###  http://example.org/math#Philosopher
+:Philosopher rdf:type owl:Class .
+
+
+###  http://example.org/math#PhilosophicalWork
+:PhilosophicalWork rdf:type owl:Class .
+
+
+###  http://example.org/math#PhysicalConcept
+:PhysicalConcept rdf:type owl:Class .
+
+
+###  http://example.org/math#PhysicalLaw
+:PhysicalLaw rdf:type owl:Class .
+
+
+###  http://example.org/math#Physicist
+:Physicist rdf:type owl:Class .
+
+
+###  http://example.org/math#ScientificSchool
+:ScientificSchool rdf:type owl:Class .
+
+
+###  http://example.org/math#ScientificWork
+:ScientificWork rdf:type owl:Class .
+
+
+###  http://example.org/math#Theorem
+:Theorem rdf:type owl:Class .
+
+
+###  http://example.org/math#Theory
+:Theory rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://example.org/math#AlKhwarizmi
+:AlKhwarizmi rdf:type owl:NamedIndividual ,
+                      :Mathematician ;
+             :hasName "аль-Хорезми" .
+
+
+###  http://example.org/math#AlbertEinstein
+:AlbertEinstein rdf:type owl:NamedIndividual ,
+                         :Physicist ;
+                :belongsToEra :ModernEra ;
+                :hasName "Альберт Эйнштейн" .
+
+
+###  http://example.org/math#Algorithm
+:Algorithm rdf:type owl:NamedIndividual ,
+                    :MathematicalConcept ;
+           :introducedBy :AlKhwarizmi ;
+           :conceptName "Алгоритм" .
+
+
+###  http://example.org/math#AnalyticalGeometry
+:AnalyticalGeometry rdf:type owl:NamedIndividual ,
+                             :BranchOfMathematics ;
+                    :foundedBy :Descartes ;
+                    :branchName "Аналитическая геометрия" .
+
+
+###  http://example.org/math#Antiquity
+:Antiquity rdf:type owl:NamedIndividual ,
+                    :HistoricalEra ;
+           :eraName "Античность" .
+
+
+###  http://example.org/math#Archimedes
+:Archimedes rdf:type owl:NamedIndividual ,
+                     :Mathematician ,
+                     :Physicist ;
+            :belongsToEra :Antiquity ;
+            :discoveredLaw :ArchimedesPrinciple ;
+            :hasName "Архимед" .
+
+
+###  http://example.org/math#ArchimedesPrinciple
+:ArchimedesPrinciple rdf:type owl:NamedIndividual ,
+                              :PhysicalLaw ;
+                     :lawName "Закон Архимеда" .
+
+
+###  http://example.org/math#Aristotle
+:Aristotle rdf:type owl:NamedIndividual ,
+                    :Philosopher ;
+           :belongsToEra :Antiquity ;
+           :hasName "Аристотель" .
+
+
+###  http://example.org/math#Arithmetica
+:Arithmetica rdf:type owl:NamedIndividual ,
+                      :ScientificWork ;
+             :writtenBy :Diophantus ;
+             :workTitle "Арифметика" .
+
+
+###  http://example.org/math#BinarySystem
+:BinarySystem rdf:type owl:NamedIndividual ,
+                       :NumberSystem ;
+              :popularizedBy :Leibniz ;
+              :systemName "Двоичная система счисления" .
+
+
+###  http://example.org/math#Bourbaki
+:Bourbaki rdf:type owl:NamedIndividual ,
+                   :Mathematician ;
+          :hasName "Николя Бурбаки" .
+
+
+###  http://example.org/math#BourbakiGroup
+:BourbakiGroup rdf:type owl:NamedIndividual ,
+                        :ScientificSchool ;
+               :establishedBy :Bourbaki ;
+               :schoolName "Группа Бурбаки" .
+
+
+###  http://example.org/math#Cambridge
+:Cambridge rdf:type owl:NamedIndividual ,
+                    :Institution ;
+           :institutionName "Кембриджский университет" .
+
+
+###  http://example.org/math#Cantor
+:Cantor rdf:type owl:NamedIndividual ,
+                 :Mathematician ;
+        :hasName "Георг Кантор" .
+
+
+###  http://example.org/math#CoordinateMethod
+:CoordinateMethod rdf:type owl:NamedIndividual ,
+                           :MathematicalMethod ;
+                  :inventedBy :Descartes ;
+                  :methodName "Метод координат" .
+
+
+###  http://example.org/math#DecimalSystem
+:DecimalSystem rdf:type owl:NamedIndividual ,
+                        :NumberSystem ;
+               :popularizedBy :AlKhwarizmi ;
+               :systemName "Десятичная система" .
+
+
+###  http://example.org/math#Descartes
+:Descartes rdf:type owl:NamedIndividual ,
+                    :Mathematician ,
+                    :Philosopher ,
+                    :Physicist ;
+           :authoredWork :Meditations ;
+           :belongsToEra :ModernEra ;
+           :studiedConcept :Optics ;
+           :hasName "Рене Декарт" .
+
+
+###  http://example.org/math#DiagonalMethod
+:DiagonalMethod rdf:type owl:NamedIndividual ,
+                         :MathematicalMethod ;
+                :inventedBy :Cantor ;
+                :methodName "Диагональный метод" .
+
+
+###  http://example.org/math#Diophantus
+:Diophantus rdf:type owl:NamedIndividual ,
+                     :Mathematician ;
+            :belongsToEra :Antiquity ;
+            :hasName "Диофант" .
+
+
+###  http://example.org/math#Elements
+:Elements rdf:type owl:NamedIndividual ,
+                   :ScientificWork ;
+          :writtenBy :Euclid ;
+          :workTitle "Начала" .
+
+
+###  http://example.org/math#Euclid
+:Euclid rdf:type owl:NamedIndividual ,
+                 :Mathematician ;
+        :belongsToEra :Antiquity ;
+        :hasName "Евклид" .
+
+
+###  http://example.org/math#Fermat
+:Fermat rdf:type owl:NamedIndividual ,
+                 :Mathematician ;
+        :belongsToEra :ModernEra ;
+        :hasName "Пьер Ферма" .
+
+
+###  http://example.org/math#FermatTheorem
+:FermatTheorem rdf:type owl:NamedIndividual ,
+                        :Theorem ;
+               :formulatedBy :Fermat ;
+               :theoremName "Великая теорема Ферма" .
+
+
+###  http://example.org/math#IsaacNewton
+:IsaacNewton rdf:type owl:NamedIndividual ,
+                      :Mathematician ,
+                      :Physicist ;
+             :associatedWith :Cambridge ;
+             :belongsToEra :ModernEra ;
+             :discoveredLaw :LawOfGravity ;
+             :studiedConcept :Optics ;
+             :hasName "Исаак Ньютон" .
+
+
+###  http://example.org/math#LawOfGravity
+:LawOfGravity rdf:type owl:NamedIndividual ,
+                       :PhysicalLaw ;
+              :lawName "Закон всемирного тяготения" .
+
+
+###  http://example.org/math#Leibniz
+:Leibniz rdf:type owl:NamedIndividual ,
+                  :Mathematician ,
+                  :Philosopher ;
+         :authoredWork :Monadology ;
+         :belongsToEra :ModernEra ;
+         :hasName "Готфрид Лейбниц" .
+
+
+###  http://example.org/math#MathematicalAnalysis
+:MathematicalAnalysis rdf:type owl:NamedIndividual ,
+                               :BranchOfMathematics ;
+                      :foundedBy :IsaacNewton ,
+                                 :Leibniz ;
+                      :branchName "Математический анализ" .
+
+
+###  http://example.org/math#Meditations
+:Meditations rdf:type owl:NamedIndividual ,
+                      :PhilosophicalWork ;
+             :workTitle "Размышления о первой философии" .
+
+
+###  http://example.org/math#ModernEra
+:ModernEra rdf:type owl:NamedIndividual ,
+                    :HistoricalEra ;
+           :eraName "Новое время" .
+
+
+###  http://example.org/math#Monadology
+:Monadology rdf:type owl:NamedIndividual ,
+                     :PhilosophicalWork ;
+            :workTitle "Монадология" .
+
+
+###  http://example.org/math#NumberTheory
+:NumberTheory rdf:type owl:NamedIndividual ,
+                       :Theory ;
+              :developedBy :Pythagoras ;
+              :theoryName "Теория чисел" .
+
+
+###  http://example.org/math#Optics
+:Optics rdf:type owl:NamedIndividual ,
+                 :PhysicalConcept ;
+        :conceptName "Оптика" .
+
+
+###  http://example.org/math#Plato
+:Plato rdf:type owl:NamedIndividual ,
+                :Philosopher ;
+       :belongsToEra :Antiquity ;
+       :hasName "Платон" .
+
+
+###  http://example.org/math#Pythagoras
+:Pythagoras rdf:type owl:NamedIndividual ,
+                     :Mathematician ,
+                     :Philosopher ;
+            :belongsToEra :Antiquity ;
+            :hasName "Пифагор" .
+
+
+###  http://example.org/math#PythagorasTheorem
+:PythagorasTheorem rdf:type owl:NamedIndividual ,
+                            :Theorem ;
+                   :formulatedBy :Pythagoras ;
+                   :theoremName "Теорема Пифагора" .
+
+
+###  http://example.org/math#PythagoreanSchool
+:PythagoreanSchool rdf:type owl:NamedIndividual ,
+                            :ScientificSchool ;
+                   :establishedBy :Pythagoras ;
+                   :schoolName "Пифагорейская школа" .
+
+
+###  http://example.org/math#SetTheory
+:SetTheory rdf:type owl:NamedIndividual ,
+                    :Theory ;
+           :developedBy :Cantor ;
+           :theoryName "Теория множеств" .
+
+
+###  http://example.org/math#Turing
+:Turing rdf:type owl:NamedIndividual ,
+                 :Mathematician ;
+        :hasName "Алан Тьюринг" .
+
+
+###  http://example.org/math#TuringMachine
+:TuringMachine rdf:type owl:NamedIndividual ,
+                        :MathematicalConcept ;
+               :introducedBy :Turing ;
+               :conceptName "Машина Тьюринга" .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
