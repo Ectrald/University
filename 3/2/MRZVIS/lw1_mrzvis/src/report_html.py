@@ -82,5 +82,46 @@ def build_html_report(
     out.append("</table>")
 
     out.append(f"<p>Время счёта на этапе: t<sub>i</sub> = {stage_time} у.в.е.</p>")
+    # ---------- Метрики конвейера ----------
+    m  = len(inputs)            # число обработанных пар (ранг задачи r)
+    n  = stages                 # число этапов конвейера
+    t  = stage_time             # время счёта одного этапа, у.в.е.
+    T1 = m * n * t                                  # последовательная архитектура
+    Tn = (m + n - 1) * t                            # сбалансированный конвейер
+    Ky  = T1 / Tn if Tn else 0.0
+    Eff = Ky / n if n else 0.0
+    out.append("<h2>Метрики конвейера</h2>")
+    out.append("<table>")
+    out.append("<tr><th>Показатель</th><th>Формула</th><th>Подстановка</th><th>Значение</th></tr>")
+    out.append(
+        f"<tr><td>T<sub>1</sub></td>"
+        f"<td>m &middot; n &middot; t<sub>i</sub></td>"
+        f"<td>{m} &middot; {n} &middot; {t}</td>"
+        f"<td>{T1} у.в.е.</td></tr>"
+    )
+    out.append(
+        f"<tr><td>T<sub>n</sub></td>"
+        f"<td>(m + n &minus; 1) &middot; t<sub>i</sub></td>"
+        f"<td>({m} + {n} &minus; 1) &middot; {t}</td>"
+        f"<td>{Tn} у.в.е.</td></tr>"
+    )
+    out.append(
+        f"<tr><td>K<sub>y</sub></td>"
+        f"<td>T<sub>1</sub> / T<sub>n</sub></td>"
+        f"<td>{T1} / {Tn}</td>"
+        f"<td>{Ky:.4f}</td></tr>"
+    )
+    out.append(
+        f"<tr><td>E<sub>ff</sub></td>"
+        f"<td>K<sub>y</sub> / n</td>"
+        f"<td>{Ky:.4f} / {n}</td>"
+        f"<td>{Eff:.4f}</td></tr>"
+    )
+    out.append("</table>")
+    out.append(
+        "<p>Здесь <i>m</i> — число обработанных пар (ранг задачи r), "
+        "<i>n</i> — число этапов конвейера, "
+        "<i>t<sub>i</sub></i> — время счёта на одном этапе.</p>"
+    )
     out.append("</body></html>")
     return "\n".join(out)

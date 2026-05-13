@@ -1,0 +1,42 @@
+@prefix : <http://example.org/math#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/math/physicists> a owl:Ontology .
+
+### --- КЛАССЫ --- ###
+:Physicist       a owl:Class .
+:PhysicalLaw     a owl:Class .
+:PhysicalConcept a owl:Class .
+
+### --- СВОЙСТВА (domain убран) --- ###
+:lawName        a owl:DatatypeProperty ; rdfs:range xsd:string .
+:discoveredLaw  a owl:ObjectProperty   ; rdfs:range :PhysicalLaw .
+:studiedConcept a owl:ObjectProperty   ; rdfs:range :PhysicalConcept .
+
+### --- ПЕРЕСЕКАЮЩИЕСЯ ЭКЗЕМПЛЯРЫ --- ###
+### Только добавляем тип :Physicist — все данные уже в matematicians-3.ttl
+### owl:NamedIndividual НЕ указывается, чтобы не создавать дублей в Protege
+:IsaacNewton a :Physicist .
+:Archimedes  a :Physicist .
+:Descartes   a :Physicist .
+
+### --- УНИКАЛЬНЫЕ ЭКЗЕМПЛЯРЫ (только физики) --- ###
+:AlbertEinstein a owl:NamedIndividual, :Physicist ;
+    :hasName "Альберт Эйнштейн"^^xsd:string ;
+    :belongsToEra :ModernEra .
+
+:LawOfGravity a owl:NamedIndividual, :PhysicalLaw ;
+    :lawName "Закон всемирного тяготения"^^xsd:string .
+:IsaacNewton :discoveredLaw :LawOfGravity .
+
+:ArchimedesPrinciple a owl:NamedIndividual, :PhysicalLaw ;
+    :lawName "Закон Архимеда"^^xsd:string .
+:Archimedes :discoveredLaw :ArchimedesPrinciple .
+
+:Optics a owl:NamedIndividual, :PhysicalConcept ;
+    :conceptName "Оптика"^^xsd:string .
+:Descartes   :studiedConcept :Optics .
+:IsaacNewton :studiedConcept :Optics .

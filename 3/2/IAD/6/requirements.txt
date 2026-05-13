@@ -1,0 +1,6 @@
+torchvision
+torch
+Pillow
+transformers
+matplotlib
+scipy

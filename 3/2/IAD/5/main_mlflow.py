@@ -20,6 +20,8 @@ import os
 imagenet_mean = [0.485, 0.456, 0.406]
 imagenet_std  = [0.229, 0.224, 0.225]
 
+mlflow.set_tracking_uri("file:" + os.path.abspath("mlruns"))
+
 def load_image(image_path, size=256):
     img = Image.open(image_path).convert('RGB')
     transform = transforms.Compose([
