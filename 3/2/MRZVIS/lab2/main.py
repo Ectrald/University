@@ -565,8 +565,8 @@ class GraphicsBuilder:
     
     def _save_plot(self, x, y1, y2, xl, yl, title, l1, l2, fname, dir_path):
         fig, ax = plt.subplots(figsize=(10, 6))
-        ax.plot(x, y1, label=l1, linewidth=2, marker='o', markersize=5)
-        ax.plot(x, y2, label=l2, linewidth=2, marker='s', markersize=5)
+        ax.plot(x, y1, label=l1, linestyle='None', marker='o', markersize=5)
+        ax.plot(x, y2, label=l2, linestyle='None', marker='s', markersize=5)
         ax.set_xlabel(xl)
         ax.set_ylabel(yl)
         ax.set_title(title)

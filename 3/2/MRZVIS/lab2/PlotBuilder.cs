@@ -28,7 +28,7 @@ public static class PlotBuilder
         
         var scatter1 = plt1.Add.Scatter(ranks, speedup);
         scatter1.Label = "n = 8, 10 (среднее)";
-        scatter1.LineWidth = 2;
+        scatter1.LineWidth = 0;
         scatter1.MarkerSize = 6;
         
         ConfigureLegend(plt1, Alignment.UpperRight);
@@ -43,7 +43,7 @@ public static class PlotBuilder
         
         var scatter2 = plt2.Add.Scatter(ranks, efficiency);
         scatter2.Label = "n = 8, 10 (среднее)";
-        scatter2.LineWidth = 2;
+        scatter2.LineWidth = 0;
         scatter2.MarkerSize = 6;
         
         ConfigureLegend(plt2, Alignment.UpperRight);
@@ -78,13 +78,13 @@ public static class PlotBuilder
             var scatKy = pltKy.Add.Scatter(nVals, speedup);
             scatKy.Label = $"r = {r}";
             scatKy.Color = colors[idx];
-            scatKy.LineWidth = 2;
+            scatKy.LineWidth = 0;
             scatKy.MarkerSize = 5;
             
             var scatEff = pltEff.Add.Scatter(nVals, efficiency);
             scatEff.Label = $"r = {r}";
             scatEff.Color = colors[idx];
-            scatEff.LineWidth = 2;
+            scatEff.LineWidth = 0;
             scatEff.MarkerSize = 5;
         }
         
